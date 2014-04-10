@@ -1,0 +1,19 @@
+.placeholder h1 {
+    color: #399BCC;
+    float: left;
+    font: 29px 'Open Sans Condensed',sans-serif;
+    text-transform: capitalize;
+    margin: 0px;
+}
+
+.image {
+    display: inline-block;
+    height: 29px;
+    width: 29px;
+    cursor: pointer;
+}
+
+.h-space {
+    display: inline-block;
+    width: 8px;
+}
