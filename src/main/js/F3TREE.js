@@ -4,20 +4,24 @@ var F3TREE = (function() {
         lang            :   'E',
         lang_ISO2       :   'EN',
         I18N_prefix     :   '',
+        prefix          :   '',
         placeholderID   :   '',
         labelID         :   '_default',
         min_height      :   '20px',
         delay           :   250,
         box_distance    :   16,
         mode1_open      :   false,
-        mode1_height    :   '298px',
-        mode1_width     :   '198px',
+        mode1_height    :   '348px',
+        mode1_width     :   '298px',
         mode2_open      :   false,
         mode2_height    :   '148px',
         mode2_width     :   '398px',
         mode3_open      :   false,
         mode3_height    :   '248px',
-        mode3_width     :   '248px'
+        mode3_width     :   '248px',
+        v_tree_height   :   '346px',
+        v_tree_width    :   '296px',
+        v_tree_data     :   null
     };
 
     function init(config) {
@@ -39,6 +43,11 @@ var F3TREE = (function() {
             path        :   F3TREE.CONFIG.I18N_prefix + 'I18N/',
             language    :   F3TREE.CONFIG.lang_ISO2
         });
+
+        /* Load vertical tree data. */
+        $.getJSON('/faostat-tree/config/FAOSTAT_New.json', function (data) {
+            F3TREE.CONFIG.v_tree_data = data;
+        })
 
         /* Create the placeholder. */
         createPlaceholder();
@@ -76,7 +85,7 @@ var F3TREE = (function() {
             close();
         } else {
             F3TREE.CONFIG.mode2_open = true;
-            open('horizontal', F3TREE.CONFIG.mode2_width, F3TREE.CONFIG.mode2_height, null);
+            open('horizontal', F3TREE.CONFIG.mode2_width, F3TREE.CONFIG.mode2_height, buildHorizontalTree);
         }
     };
 
@@ -86,7 +95,7 @@ var F3TREE = (function() {
             close();
         } else {
             F3TREE.CONFIG.mode3_open = true;
-            open('alphabetical', F3TREE.CONFIG.mode3_width, F3TREE.CONFIG.mode3_height, null);
+            open('alphabetical', F3TREE.CONFIG.mode3_width, F3TREE.CONFIG.mode3_height, buildAlphabeticalTree);
         }
     };
 
@@ -139,114 +148,33 @@ var F3TREE = (function() {
         return s.substring(0, s.indexOf('px'));
     }
 
+    function buildHorizontalTree() {
+        alert('buildHorizontalTree');
+    };
+
+    function buildAlphabeticalTree() {
+        alert('buildAlphabeticalTree');
+    };
+
     function buildVerticalTree() {
-        var data = [
-            { "id": "2",
-                "parentid": "1",
-                "text": "Hot Chocolate",
-                "value": "$2.3"
-            }, {
-                "id": "3",
-                "parentid": "1",
-                "text": "Peppermint Hot Chocolate",
-                "value": "$2.3"
-            }, {
-                "id": "4",
-                "parentid": "1",
-                "text": "Salted Caramel Hot Chocolate",
-                "value": "$2.3"
-            }, {
-                "id": "5",
-                "parentid": "1",
-                "text": "White Hot Chocolate",
-                "value": "$2.3"
-            }, {
-                "text": "Chocolate Beverage",
-                "id": "1",
-                "parentid": "-1",
-                "value": "$2.3"
-            }, {
-                "id": "6",
-                "text": "Espresso Beverage",
-                "parentid": "-1",
-                "value": "$2.3"
-            }, {
-                "id": "7",
-                "parentid": "6",
-                "text": "Caffe Americano",
-                "value": "$2.3"
-            }, {
-                "id": "8",
-                "text": "Caffe Latte",
-                "parentid": "6",
-                "value": "$2.3"
-            }, {
-                "id": "9",
-                "text": "Caffe Mocha",
-                "parentid": "6",
-                "value": "$2.3"
-            }, {
-                "id": "10",
-                "text": "Cappuccino",
-                "parentid": "6",
-                "value": "$2.3"
-            }, {
-                "id": "11",
-                "text": "Pumpkin Spice Latte",
-                "parentid": "6",
-                "value": "$2.3"
-            }, {
-                "id": "12",
-                "text": "Frappuccino",
-                "parentid": "-1"
-            }, {
-                "id": "13",
-                "text": "Caffe Vanilla Frappuccino",
-                "parentid": "12",
-                "value": "$2.3"
-            }, {
-                "id": "15",
-                "text": "450 calories",
-                "parentid": "13",
-                "value": "$2.3"
-            }, {
-                "id": "16",
-                "text": "16g fat",
-                "parentid": "13",
-                "value": "$2.3"
-            }, {
-                "id": "17",
-                "text": "13g protein",
-                "parentid": "13",
-                "value": "$2.3"
-            }, {
-                "id": "14",
-                "text": "Caffe Vanilla Frappuccino Light",
-                "parentid": "12",
-                "value": "$2.3"
-            }]
-        // prepare the data
-        var source =
-        {
-            datatype: "json",
+        var source = {
+            datatype: 'json',
             datafields: [
-                { name: 'id' },
-                { name: 'parentid' },
-                { name: 'text' },
-                { name: 'value' }
+                {name: 'value'},
+                {name: 'name'},
+                {name: 'parent'}
             ],
-            id: 'id',
-            localdata: data
+            id: 'value',
+            localdata: F3TREE.CONFIG.v_tree_data
         };
-        // create data adapter.
         var dataAdapter = new $.jqx.dataAdapter(source);
-        // perform Data Binding.
         dataAdapter.dataBind();
-        // get the tree items. The first parameter is the item's id. The second parameter is the parent item's id. The 'items' parameter represents
-        // the sub items collection name. Each jqxTree item has a 'label' property, but in the JSON data, we have a 'text' field. The last parameter
-        // specifies the mapping between the 'text' and 'label' fields.
-        var records = dataAdapter.getRecordsHierarchy('id', 'parentid', 'items', [{ name: 'text', map: 'label'}]);
-        $('#vertical_tree').jqxTree({ source: records, width: '196px', height: '296px'});
+        var records = dataAdapter.getRecordsHierarchy('value', 'parent', 'items', [{name: 'name', map: 'label'}]);
+        $('#vertical_tree').jqxTree({
+            source  :   records,
+            width   :   F3TREE.CONFIG.v_tree_width,
+            height  :   F3TREE.CONFIG.v_tree_height
+        });
     };
 
     return {

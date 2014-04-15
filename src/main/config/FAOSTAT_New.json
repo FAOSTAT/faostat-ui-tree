@@ -1,0 +1,1362 @@
+[
+    {
+        "value": "0",
+        "name": "Food Security and Nutrition Statistics",
+        "parent": "-1"
+    },
+    {
+        "value": "0.1",
+        "name": "Food supply, utilization accounts and food balance sheets",
+        "parent": "0"
+    },
+    {
+        "value": "C",
+        "name": "Food supply",
+        "parent": "0.1"
+    },
+    {
+        "value": "CC",
+        "name": "Crops Primary Equivalent",
+        "parent": "C"
+    },
+    {
+        "value": "CL",
+        "name": "Livestock and Fish Primary Equivalent",
+        "parent": "C"
+    },
+    {
+        "value": "FB",
+        "name": "Food balance sheet",
+        "parent": "0.1"
+    },
+    {
+        "value": "B",
+        "name": "Commodity Balances",
+        "parent": "0.1"
+    },
+    {
+        "value": "BC",
+        "name": "Crops Primary Equivalent",
+        "parent": "B"
+    },
+    {
+        "value": "BL",
+        "name": "Livestock and Fish Primary Equivalent",
+        "parent": "B"
+    },
+    {
+        "value": "0.2",
+        "name": "Undernourishment",
+        "parent": "0"
+    },
+    {
+        "value": "0.3",
+        "name": "Anthropometric data",
+        "parent": "0"
+    },
+    {
+        "value": "0.4",
+        "name": "Nutrition and food composition",
+        "parent": "0"
+    },
+    {
+        "value": "1",
+        "name": "Demographic and Social Statistics",
+        "parent": "-1"
+    },
+    {
+        "value": "1.1",
+        "name": "Population and Migration",
+        "parent": "1"
+    },
+    {
+        "value": "1.1.1",
+        "name": "Total population",
+        "parent": "1.1"
+    },
+    {
+        "value": "OA",
+        "name": "Annual population",
+        "parent": "1.1.1"
+    },
+    {
+        "value": "1.1.2",
+        "name": "Rural population",
+        "parent": "1.1"
+    },
+    {
+        "value": "1.1.3",
+        "name": "Urban population",
+        "parent": "1.1"
+    },
+    {
+        "value": "1.1.4",
+        "name": "Agricultural population",
+        "parent": "1.1"
+    },
+    {
+        "value": "1.1.5",
+        "name": "Non-agricultural population",
+        "parent": "1.1"
+    },
+    {
+        "value": "1.1.6",
+        "name": "Holders",
+        "parent": "1.1"
+    },
+    {
+        "value": "1.2",
+        "name": "Labour",
+        "parent": "1"
+    },
+    {
+        "value": "1.2.1",
+        "name": "Total economically active population",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.2",
+        "name": "Economically active population in agriculture",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.3",
+        "name": "Economically active population in fishery",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.4",
+        "name": "Economically active population in forestry",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.5",
+        "name": "Total employment",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.6",
+        "name": "Employment in agriculture",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.7",
+        "name": "Employment in fishery",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.8",
+        "name": "Employment in forestry",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.9",
+        "name": "Legal status of the holder",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.2.10",
+        "name": "Holders by main type of activity",
+        "parent": "1.2"
+    },
+    {
+        "value": "1.3",
+        "name": "Education",
+        "parent": "1"
+    },
+    {
+        "value": "1.4",
+        "name": "Health",
+        "parent": "1"
+    },
+    {
+        "value": "1.5",
+        "name": "Income and consumption",
+        "parent": "1"
+    },
+    {
+        "value": "1.5.1",
+        "name": "Statistics on household income and expenditures",
+        "parent": "1.5"
+    },
+    {
+        "value": "1.5.2",
+        "name": "Statistics on agriculture household income and expenditures",
+        "parent": "1.5"
+    },
+    {
+        "value": "1.6",
+        "name": "Social protection",
+        "parent": "1"
+    },
+    {
+        "value": "1.7",
+        "name": "Human settlements and housing",
+        "parent": "1"
+    },
+    {
+        "value": "1.8",
+        "name": "Justice and crime",
+        "parent": "1"
+    },
+    {
+        "value": "1.9",
+        "name": "Culture",
+        "parent": "1"
+    },
+    {
+        "value": "1.10",
+        "name": "Political and other community activities",
+        "parent": "1"
+    },
+    {
+        "value": "1.11",
+        "name": "Time use",
+        "parent": "1"
+    },
+    {
+        "value": "2",
+        "name": "Economic Statistics",
+        "parent": "-1"
+    },
+    {
+        "value": "2.1",
+        "name": "Macroeconomic statistics",
+        "parent": "2"
+    },
+    {
+        "value": "2.2",
+        "name": "Economic accounts",
+        "parent": "2"
+    },
+    {
+        "value": "2.2.1",
+        "name": "National accounts data",
+        "parent": "2.2"
+    },
+    {
+        "value": "2.3",
+        "name": "Business statistics",
+        "parent": "2"
+    },
+    {
+        "value": "2.4",
+        "name": "Sectoral statistics",
+        "parent": "2"
+    },
+    {
+        "value": "2.4.1",
+        "name": "Agriculture, forestry, fisheries",
+        "parent": "2.4"
+    },
+    {
+        "value": "2.4.1.1",
+        "name": "Agriculture, forestry, fisheries economic accounts",
+        "parent": "2.4.1"
+    },
+    {
+        "value": "2.4.1.1.1",
+        "name": "Agriculture, forestry economic accounts",
+        "parent": "2.4.1.1"
+    },
+    {
+        "value": "2.4.1.1.2",
+        "name": "Agriculture economic accounts",
+        "parent": "2.4.1.1"
+    },
+    {
+        "value": "2.4.1.1.3",
+        "name": "Forestry economic accounts",
+        "parent": "2.4.1.1"
+    },
+    {
+        "value": "2.4.1.1.4",
+        "name": "Fisheries economic accounts",
+        "parent": "2.4.1.1"
+    },
+    {
+        "value": "2.4.1.2",
+        "name": "Agriculture",
+        "parent": "2.4.1"
+    },
+    {
+        "value": "Q",
+        "name": "Production",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "QC",
+        "name": "Crops",
+        "parent": "Q"
+    },
+    {
+        "value": "QD",
+        "name": "Crops processed",
+        "parent": "Q"
+    },
+    {
+        "value": "QA",
+        "name": "Live Animals",
+        "parent": "Q"
+    },
+    {
+        "value": "QL",
+        "name": "Livestock Primary",
+        "parent": "Q"
+    },
+    {
+        "value": "QP",
+        "name": "Livestock Processed",
+        "parent": "Q"
+    },
+    {
+        "value": "QI",
+        "name": "Production indices",
+        "parent": "Q"
+    },
+    {
+        "value": "QV",
+        "name": "Value of Agricultural Production",
+        "parent": "Q"
+    },
+    {
+        "value": "T",
+        "name": "Trade",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "TP",
+        "name": "Crops and livestock products",
+        "parent": "T"
+    },
+    {
+        "value": "TA",
+        "name": "Live animals",
+        "parent": "T"
+    },
+    {
+        "value": "TM",
+        "name": "Detailed trade matrix",
+        "parent": "T"
+    },
+    {
+        "value": "TI",
+        "name": "Trade Indices",
+        "parent": "T"
+    },
+    {
+        "value": "2.4.1.2.3",
+        "name": "Fertilizers",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "RF",
+        "name": "Fertilizers",
+        "parent": "2.4.1.2.3"
+    },
+    {
+        "value": "RA",
+        "name": "Fertilizers archive",
+        "parent": "2.4.1.2.3"
+    },
+    {
+        "value": "RV",
+        "name": "Fertilizers - Trade Value",
+        "parent": "2.4.1.2.3"
+    },
+    {
+        "value": "2.4.1.2.4",
+        "name": "Pesticides",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "RP",
+        "name": "Pesticides (use)",
+        "parent": "2.4.1.2.4"
+    },
+    {
+        "value": "RT",
+        "name": "Pesticides (trade)",
+        "parent": "2.4.1.2.4"
+    },
+    {
+        "value": "2.4.1.2.5",
+        "name": "Feed",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "2.4.1.2.6",
+        "name": "Seed",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "2.4.1.2.7",
+        "name": "Cost of production",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "2.4.1.2.8",
+        "name": "Capital costs",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "2.4.1.2.9",
+        "name": "Investment and capital stock in agriculture",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "CS",
+        "name": "Capital stock",
+        "parent": "2.4.1.2.9"
+    },
+    {
+        "value": "RM",
+        "name": "Machinery",
+        "parent": "2.4.1.2.9"
+    },
+    {
+        "value": "RY",
+        "name": "Machinery Archive",
+        "parent": "2.4.1.2.9"
+    },
+    {
+        "value": "2.4.1.2.10",
+        "name": "Government expenditure in agriculture",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "2.4.1.2.11",
+        "name": "EAA",
+        "parent": "2.4.1.2"
+    },
+    {
+        "value": "2.4.1.3",
+        "name": "Forestry",
+        "parent": "2.4.1"
+    },
+    {
+        "value": "2.4.1.3.1",
+        "name": "Production",
+        "parent": "2.4.1.3"
+    },
+    {
+        "value": "2.4.1.3.2",
+        "name": "Trade",
+        "parent": "2.4.1.3"
+    },
+    {
+        "value": "FO",
+        "name": "Forestry Production and Trade",
+        "parent": "2.4.1.3"
+    },
+    {
+        "value": "FT",
+        "name": "Forestry Trade Flows",
+        "parent": "2.4.1.3"
+    },
+    {
+        "value": "2.4.1.3.3",
+        "name": "Cost of production",
+        "parent": "2.4.1.3"
+    },
+    {
+        "value": "2.4.1.3.4",
+        "name": "Capital costs",
+        "parent": "2.4.1.3"
+    },
+    {
+        "value": "2.4.1.3.5",
+        "name": "Machinery and equipment supply",
+        "parent": "2.4.1.3"
+    },
+    {
+        "value": "2.4.1.4",
+        "name": "Fisheries",
+        "parent": "2.4.1"
+    },
+    {
+        "value": "2.4.1.4.1",
+        "name": "Production",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.2",
+        "name": "Trade",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.3",
+        "name": "Cost of production",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.4",
+        "name": "Capital costs",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.5",
+        "name": "Fishing fleet, fishing efforts",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.6",
+        "name": "Aquaculture facilities",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.7",
+        "name": "Seeds",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.8",
+        "name": "Feeds",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.9",
+        "name": "Disposition",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.10",
+        "name": "Catastrophic loss",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.1.4.11",
+        "name": "Machinery and equipment supply",
+        "parent": "2.4.1.4"
+    },
+    {
+        "value": "2.4.2",
+        "name": "Energy",
+        "parent": "2.4"
+    },
+    {
+        "value": "2.4.2.1",
+        "name": "Agriculture's share of total energy consumption",
+        "parent": "2.4.2"
+    },
+    {
+        "value": "EE",
+        "name": "Energy**",
+        "parent": "2.4.2.1"
+    },
+    {
+        "value": "2.4.2.2",
+        "name": "Bioenergy percentage of total Renewable Energy Production",
+        "parent": "2.4.2"
+    },
+    {
+        "value": "2.4.3",
+        "name": "Mining, manufacturing, construction",
+        "parent": "2.4"
+    },
+    {
+        "value": "2.4.3.1",
+        "name": "Manufacture of food products and beverages",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.2",
+        "name": "Manufacture of tobacco products",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.3",
+        "name": "Manufacture of textiles",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.4",
+        "name": "Tanning and dressing of leather; manufacture of luggage, handbags, saddlery, harness and footwear",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.5",
+        "name": "Manufacture of wood and of products of wood and cork, except furniture; manufacture of articles of straw and plaiting materials",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.6",
+        "name": "Manufacture of paper and paper products",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.7",
+        "name": "Manufacture of machinery and equipment",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.7.1",
+        "name": "Manufacture of agricultural and forestry machinery",
+        "parent": "2.4.3.7"
+    },
+    {
+        "value": "2.4.3.7.2",
+        "name": "Manufacture of machinery for food, beverage and tobacco processing",
+        "parent": "2.4.3.7"
+    },
+    {
+        "value": "2.4.3.7.3",
+        "name": "Manufacture of machinery for textile, apparel and leather production",
+        "parent": "2.4.3.7"
+    },
+    {
+        "value": "2.4.3.8",
+        "name": "Manufacture of other transport equipment",
+        "parent": "2.4.3"
+    },
+    {
+        "value": "2.4.3.8.1",
+        "name": "Building and repairing of ships",
+        "parent": "2.4.3.8"
+    },
+    {
+        "value": "2.4.4",
+        "name": "Transport",
+        "parent": "2.4"
+    },
+    {
+        "value": "2.4.5",
+        "name": "Tourism",
+        "parent": "2.4"
+    },
+    {
+        "value": "2.4.5.1",
+        "name": "Recreational fishing (number of visitors, licenses, removal of fish by species etc) ",
+        "parent": "2.4.5"
+    },
+    {
+        "value": "2.4.5.2",
+        "name": "Hunting",
+        "parent": "2.4.5"
+    },
+    {
+        "value": "2.4.5.3",
+        "name": "Agro-tourism",
+        "parent": "2.4.5"
+    },
+    {
+        "value": "2.4.5.4",
+        "name": "National tourism satellite account ",
+        "parent": "2.4.5"
+    },
+    {
+        "value": "2.4.6",
+        "name": "Banking, insurance, financial statistics",
+        "parent": "2.4"
+    },
+    {
+        "value": "2.5",
+        "name": "Government finance, fiscal and public sector statistics",
+        "parent": "2"
+    },
+    {
+        "value": "2.6",
+        "name": "International trade and balance of payments",
+        "parent": "2"
+    },
+    {
+        "value": "P",
+        "name": "Prices",
+        "parent": "2"
+    },
+    {
+        "value": "2.7.1",
+        "name": "Producer prices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.1.1",
+        "name": "Agriculture commodities",
+        "parent": "2.7.1"
+    },
+    {
+        "value": "PM",
+        "name": "Producer Prices - Monthly",
+        "parent": "2.7.1.1"
+    },
+    {
+        "value": "PP",
+        "name": "Producer Prices - Annual",
+        "parent": "2.7.1.1"
+    },
+    {
+        "value": "PA",
+        "name": "Producer Prices - Archive",
+        "parent": "2.7.1.1"
+    },
+    {
+        "value": "2.7.1.2",
+        "name": "Forest and wood products",
+        "parent": "2.7.1"
+    },
+    {
+        "value": "2.7.1.3",
+        "name": "Fishery commodities",
+        "parent": "2.7.1"
+    },
+    {
+        "value": "2.7.2",
+        "name": "Producer Price Indices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.2.1",
+        "name": "Agriculture commodities",
+        "parent": "2.7.2"
+    },
+    {
+        "value": "PI",
+        "name": "Producer Price Indices - Annual",
+        "parent": "2.7.2.1"
+    },
+    {
+        "value": "2.7.2.2",
+        "name": "Forest and wood products",
+        "parent": "2.7.2"
+    },
+    {
+        "value": "2.7.2.3",
+        "name": "Fishery commodities",
+        "parent": "2.7.2"
+    },
+    {
+        "value": "2.7.3",
+        "name": "Consumer Prices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.3.1",
+        "name": "All commodities and services",
+        "parent": "2.7.3"
+    },
+    {
+        "value": "2.7.3.2",
+        "name": "Food commodities",
+        "parent": "2.7.3"
+    },
+    {
+        "value": "2.7.4",
+        "name": "Consumer Price Indices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.4.1",
+        "name": "All commodities and services",
+        "parent": "2.7.4"
+    },
+    {
+        "value": "2.7.4.2",
+        "name": "Food commodities",
+        "parent": "2.7.4"
+    },
+    {
+        "value": "2.7.4",
+        "name": "Consumer Price Indices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.4.1",
+        "name": "All commodities and services",
+        "parent": "2.7.4"
+    },
+    {
+        "value": "2.7.4.2",
+        "name": "Food commodities",
+        "parent": "2.7.4"
+    },
+    {
+        "value": "2.7.5",
+        "name": "Input Prices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.6",
+        "name": "Input Price Indices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.7",
+        "name": "Import Prices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.7.1",
+        "name": "Agriculture commodities",
+        "parent": "2.7.7"
+    },
+    {
+        "value": "2.7.7.2",
+        "name": "Forest and wood products",
+        "parent": "2.7.7"
+    },
+    {
+        "value": "2.7.7.3",
+        "name": "Fishery commodities",
+        "parent": "2.7.7"
+    },
+    {
+        "value": "2.7.8",
+        "name": "Import Price Indices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.8.1",
+        "name": "Agriculture commodities",
+        "parent": "2.7.8"
+    },
+    {
+        "value": "2.7.8.2",
+        "name": "Forest and wood products",
+        "parent": "2.7.8"
+    },
+    {
+        "value": "2.7.8.3",
+        "name": "Fishery commodities",
+        "parent": "2.7.8"
+    },
+    {
+        "value": "2.7.9",
+        "name": "Export Prices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.9.1",
+        "name": "Agriculture commodities",
+        "parent": "2.7.9"
+    },
+    {
+        "value": "2.7.9.2",
+        "name": "Forest and wood products",
+        "parent": "2.7.9"
+    },
+    {
+        "value": "2.7.9.3",
+        "name": "Fishery commodities",
+        "parent": "2.7.9"
+    },
+    {
+        "value": "2.7.10",
+        "name": "Export Price Indices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.10.1",
+        "name": "Agriculture commodities",
+        "parent": "2.7.10"
+    },
+    {
+        "value": "2.7.10.2",
+        "name": "Forest and wood products",
+        "parent": "2.7.10"
+    },
+    {
+        "value": "2.7.10.3",
+        "name": "Fishery commodities",
+        "parent": "2.7.10"
+    },
+    {
+        "value": "2.7.11",
+        "name": "Relative Prices",
+        "parent": "P"
+    },
+    {
+        "value": "2.7.11.1",
+        "name": "Forest and wood products",
+        "parent": "2.7.11"
+    },
+    {
+        "value": "2.7.11.2",
+        "name": "Fishery commodities",
+        "parent": "2.7.11"
+    },
+    {
+        "value": "2.8",
+        "name": "Labour cost",
+        "parent": "2"
+    },
+    {
+        "value": "2.8.1",
+        "name": "Labour costs agriculture, forestry, fishery",
+        "parent": "2.8"
+    },
+    {
+        "value": "2.8.2",
+        "name": "Labour costs agriculture",
+        "parent": "2.8"
+    },
+    {
+        "value": "2.8.3",
+        "name": "Labour cost forestry",
+        "parent": "2.8"
+    },
+    {
+        "value": "2.8.4",
+        "name": "Labour cost fishery",
+        "parent": "2.8"
+    },
+    {
+        "value": "2.9",
+        "name": "Science, technology and innovation",
+        "parent": "2"
+    },
+    {
+        "value": "2.9.1",
+        "name": "R&D in agriculture",
+        "parent": "2.9"
+    },
+    {
+        "value": "AS",
+        "name": "ASTI R&D Indicators",
+        "parent": "2.9.1"
+    },
+    {
+        "value": "AA",
+        "name": "ASTI-Researchers by Agency Type",
+        "parent": "AS"
+    },
+    {
+        "value": "AR",
+        "name": "ASTI-Researchers by Gender and Degree Level",
+        "parent": "AS"
+    },
+    {
+        "value": "AE",
+        "name": "ASTI-Expenditures",
+        "parent": "AS"
+    },
+    {
+        "value": "2.9.2",
+        "name": "R&D in forestry",
+        "parent": "2.9"
+    },
+    {
+        "value": "2.9.3",
+        "name": "R&D in fishery",
+        "parent": "2.9"
+    },
+    {
+        "value": "3A",
+        "name": "Environment Statistics",
+        "parent": "-1"
+    },
+    {
+        "value": "3.1",
+        "name": "Environment",
+        "parent": "3A"
+    },
+    {
+        "value": "3.1.1",
+        "name": "Land",
+        "parent": "3.1"
+    },
+    {
+        "value": "RL",
+        "name": "Total territorial area and land area",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "3.1.1.2",
+        "name": "Land use (should include water use including EEZ marine waters)",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "3.1.1.3",
+        "name": "Land cover",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "3.1.1.4",
+        "name": "Land tenure",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "3.1.1.5",
+        "name": "Agriculture holdings",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "3.1.1.6",
+        "name": "Forestry holdings",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "3.1.1.7",
+        "name": "Aquaculture holdings",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "EL",
+        "name": "Land**",
+        "parent": "3.1.1"
+    },
+    {
+        "value": "3.1.2",
+        "name": "Soil",
+        "parent": "3.1"
+    },
+    {
+        "value": "ES",
+        "name": "Soil**",
+        "parent": "3.1.2"
+    },
+    {
+        "value": "3.1.3",
+        "name": "Water",
+        "parent": "3.1"
+    },
+    {
+        "value": "3.1.3.1",
+        "name": "Water resources",
+        "parent": "3.1.3"
+    },
+    {
+        "value": "3.1.3.1.1",
+        "name": "Precipitation",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.2",
+        "name": "Internal renewable water resources",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.3",
+        "name": "External renewable water resources",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.4",
+        "name": "Total renewable water resources",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.5",
+        "name": "Exploitable water resources and dam capacitys",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.6",
+        "name": "Area of inland water bodies",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.7",
+        "name": "Inland waters under saline influence",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.8",
+        "name": "Area of Exclusive Economic Zone",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.1.9",
+        "name": "Area over continental shelf",
+        "parent": "3.1.3.1"
+    },
+    {
+        "value": "3.1.3.2",
+        "name": "Fresh-Water Use",
+        "parent": "3.1.3"
+    },
+    {
+        "value": "3.1.3.2.1",
+        "name": "Water withdrawal by sector",
+        "parent": "3.1.3.2"
+    },
+    {
+        "value": "EW",
+        "name": "Water**",
+        "parent": "3.1.3.2.1"
+    },
+    {
+        "value": "3.1.3.2.2",
+        "name": "Water withdrawal by source",
+        "parent": "3.1.3.2"
+    },
+    {
+        "value": "3.1.3.2.3",
+        "name": "Wastewater",
+        "parent": "3.1.3.2"
+    },
+    {
+        "value": "3.1.3.2.4",
+        "name": "Pressure on water resources",
+        "parent": "3.1.3.2"
+    },
+    {
+        "value": "3.1.3.3",
+        "name": "Irrigation",
+        "parent": "3.1.3"
+    },
+    {
+        "value": "3.1.3.3.1",
+        "name": "Area under agricultural water management",
+        "parent": "3.1.3.3"
+    },
+    {
+        "value": "3.1.3.3.2",
+        "name": "Area equipped for irrigation by source of water",
+        "parent": "3.1.3.3"
+    },
+    {
+        "value": "3.1.3.3.3",
+        "name": "Power irrigated area",
+        "parent": "3.1.3.3"
+    },
+    {
+        "value": "3.1.3.3.4",
+        "name": "Irrigated crop area and cropping intensity",
+        "parent": "3.1.3.3"
+    },
+    {
+        "value": "3.1.3.3.5",
+        "name": "Drainage",
+        "parent": "3.1.3.3"
+    },
+    {
+        "value": "3.1.3.3.6",
+        "name": "Conservation agriculture",
+        "parent": "3.1.3.3"
+    },
+    {
+        "value": "3.1.3.4",
+        "name": "Water Balance",
+        "parent": "3.1.3"
+    },
+    {
+        "value": "3.1.4",
+        "name": "Air, climate change and natural events",
+        "parent": "3.1"
+    },
+    {
+        "value": "3.1.4.1",
+        "name": "GHG emissions",
+        "parent": "3.1.4"
+    },
+    {
+        "value": "G1",
+        "name": "Emissions - Agriculture",
+        "parent": "3.1.4.1"
+    },
+    {
+        "value": "GT",
+        "name": "Agriculture Total",
+        "parent": "G1"
+    },
+    {
+        "value": "GE",
+        "name": "Enteric Fermentation",
+        "parent": "G1"
+    },
+    {
+        "value": "GM",
+        "name": "Manure Management",
+        "parent": "G1"
+    },
+    {
+        "value": "GR",
+        "name": "Rice Cultivation",
+        "parent": "G1"
+    },
+    {
+        "value": "GY",
+        "name": "Synthetic Fertilizers",
+        "parent": "G1"
+    },
+    {
+        "value": "GU",
+        "name": "Manure applied to soils",
+        "parent": "G1"
+    },
+    {
+        "value": "GP",
+        "name": "Manure left on pasture",
+        "parent": "G1"
+    },
+    {
+        "value": "GA",
+        "name": "Crop Residues",
+        "parent": "G1"
+    },
+    {
+        "value": "GV",
+        "name": "Cultivated Organic Soils",
+        "parent": "G1"
+    },
+    {
+        "value": "GB",
+        "name": "Burning Crop Residues",
+        "parent": "G1"
+    },
+    {
+        "value": "G2",
+        "name": "Emissions - Land Use",
+        "parent": "3.1.4.1"
+    },
+    {
+        "value": "GF",
+        "name": "Forest Land",
+        "parent": "G2"
+    },
+    {
+        "value": "GC",
+        "name": "Cropland",
+        "parent": "G2"
+    },
+    {
+        "value": "3.1.4.2",
+        "name": "Precipitation",
+        "parent": "3.1.4"
+    },
+    {
+        "value": "3.1.4.3",
+        "name": "Temperature",
+        "parent": "3.1.4"
+    },
+    {
+        "value": "3.1.4.4",
+        "name": "Forest and other types of fires",
+        "parent": "3.1.4"
+    },
+    {
+        "value": "3.1.4.5",
+        "name": "Extreme events (drought, flood, heat wave, cold wave, storms, earthquake, tsunami, etc)",
+        "parent": "3.1.4"
+    },
+    {
+        "value": "EC",
+        "name": "Air and climate change",
+        "parent": "3.1.4"
+    },
+    {
+        "value": "3.1.5",
+        "name": "Plants, animals and ecosystems",
+        "parent": "3.1"
+    },
+    {
+        "value": "3.1.6",
+        "name": "System of Environmental-Economic Accounting (SEEA)",
+        "parent": "3.1"
+    },
+    {
+        "value": "3.1.6.1",
+        "name": "SEEA agriculture",
+        "parent": "3.1.6"
+    },
+    {
+        "value": "3.1.6.2",
+        "name": "SEEA water",
+        "parent": "3.1.6"
+    },
+    {
+        "value": "3.1.6.3",
+        "name": "SEEA timber resources asset account",
+        "parent": "3.1.6"
+    },
+    {
+        "value": "3.1.6.4",
+        "name": "SEEA aquatic resources asset account",
+        "parent": "3.1.6"
+    },
+    {
+        "value": "3.1.7",
+        "name": "Fertilizers",
+        "parent": "3.1"
+    },
+    {
+        "value": "EF",
+        "name": "Fertilizers**",
+        "parent": "3.1.7"
+    },
+    {
+        "value": "3.1.8",
+        "name": "Livestock",
+        "parent": "3.1"
+    },
+    {
+        "value": "EK",
+        "name": "Livestock**",
+        "parent": "3.1.8"
+    },
+    {
+        "value": "3.1.9",
+        "name": "Pesticides",
+        "parent": "3.1"
+    },
+    {
+        "value": "EP",
+        "name": "Pesticides**",
+        "parent": "3.1.9"
+    },
+    {
+        "value": "3B",
+        "name": "Multi-Domain Statistics",
+        "parent": "-1"
+    },
+    {
+        "value": "3.2",
+        "name": "Regional and small area statistics",
+        "parent": "3B"
+    },
+    {
+        "value": "3.2.1",
+        "name": "Rural development",
+        "parent": "3.2"
+    },
+    {
+        "value": "3.3",
+        "name": "Multi-domain statistics and indicators",
+        "parent": "3B"
+    },
+    {
+        "value": "3.3.1",
+        "name": "Living conditions, poverty and cross-cutting social issues",
+        "parent": "3.3"
+    },
+    {
+        "value": "3.3.1.1",
+        "name": "Composition of agriculture household by sex and age (census)",
+        "parent": "3.3.1"
+    },
+    {
+        "value": "3.3.2",
+        "name": "Gender and special population groups",
+        "parent": "3.3"
+    },
+    {
+        "value": "3.3.3",
+        "name": "Information society",
+        "parent": "3.3"
+    },
+    {
+        "value": "3.3.4",
+        "name": "Globalisation",
+        "parent": "3.3"
+    },
+    {
+        "value": "3.3.5",
+        "name": "Indicators related to the millennium development goals",
+        "parent": "3.3"
+    },
+    {
+        "value": "3.3.6",
+        "name": "Sustainable development",
+        "parent": "3.3"
+    },
+    {
+        "value": "3.3.7",
+        "name": "Entrepreneurship",
+        "parent": "3.3"
+    },
+    {
+        "value": "3.4",
+        "name": "Yearbooks and similar compendia",
+        "parent": "3B"
+    }
+]
