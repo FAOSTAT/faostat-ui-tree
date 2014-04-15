@@ -1,3 +1,7 @@
+.placeholder {
+    background-color: #FFFFFF;
+}
+
 .placeholder h1 {
     color: #399BCC;
     float: left;
@@ -16,4 +20,16 @@
 .h-space {
     display: inline-block;
     width: 8px;
+}
+
+.fnx-tree-box {
+    border: 1px solid #000000;
+    width: 198px;
+    height: 20px;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+    padding: 4px;
+    z-index: -5000;
 }
