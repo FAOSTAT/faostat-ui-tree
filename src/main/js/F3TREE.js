@@ -138,6 +138,7 @@ var F3TREE = (function() {
 
     function createTreeBox() {
         $('#' + F3TREE.CONFIG.placeholderID).append('<div id="fnx-tree-box" class="fnx-tree-box"><div id="vertical_tree"></div></div>');
+        document.getElementById('vertical_tree').innerHTML = "Loading... <img src='images/loading.gif'>";
     };
 
     function destroyTreeBox() {
