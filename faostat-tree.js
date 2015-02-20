@@ -34,7 +34,55 @@ define(['jquery',
         $('#' + this.CONFIG.placeholder_id).html('I am a tree');
 
         /* REST URL */
-        var url = this.CONFIG.data.url_rest + '/' + this.CONFIG.data.datasource + '/' + this.CONFIG.data.lang;
+        var url = this.CONFIG.url_rest + '/' + this.CONFIG.datasource + '/' + this.CONFIG.lang;
+
+        /* Load groups and domains from the DB. */
+        $.ajax({
+
+            type: 'GET',
+            url: url,
+
+            success: function (response) {
+
+                /* Cast the response to JSON, if needed. */
+                var json = response;
+                if (typeof json == 'string')
+                    json = $.parseJSON(response);
+
+                var payload = [];
+                payload.push({
+                    id: 'Q',
+                    text: 'Production',
+                    parent: '#'
+                });
+                payload.push({
+                    id: 'QC',
+                    text: 'Crops',
+                    parent: 'Q'
+                });
+
+                /* Init JSTree. */
+                $('#' + _this.CONFIG.placeholder_id).jstree({
+
+                    'plugins': ['unique', 'search', 'types', 'wholerow'],
+
+                    'core': {
+                        'data': payload,
+                        'themes': {
+                            'icons': false
+                        }
+                    },
+
+                    'search': {
+                        'show_only_matches': true,
+                        'close_opened_onclear': false
+                    }
+
+                });
+
+            }
+
+        });
 
     };
 
