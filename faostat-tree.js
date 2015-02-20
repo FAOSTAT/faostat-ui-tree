@@ -30,8 +30,8 @@ define(['jquery',
         /* this... */
         var _this = this;
 
-        /* Test. */
-        $('#' + this.CONFIG.placeholder_id).html('I am a tree');
+        /* Store JQuery object.. */
+        this.tree = $('#' + _this.CONFIG.placeholder_id);
 
         /* REST URL */
         var url = this.CONFIG.url_rest + '/' + this.CONFIG.datasource + '/' + this.CONFIG.lang;
@@ -76,7 +76,7 @@ define(['jquery',
                 }
 
                 /* Init JSTree. */
-                $('#' + _this.CONFIG.placeholder_id).jstree({
+                _this.tree.jstree({
 
                     'plugins': ['unique', 'search', 'types', 'wholerow'],
 
@@ -94,10 +94,25 @@ define(['jquery',
 
                 });
 
+                _this.tree.on('changed.jstree', function (e, data) {
+                    if (data.node.parent == '#')
+                        _this.onClick_group(data.node.id);
+                    else
+                        _this.onClick_domain(data.node.id);
+                });
+
             }
 
         });
 
+    };
+
+    TREE.prototype.onClick_group = function(id) {
+        sweetAlert('You have selected group ' + id);
+    };
+
+    TREE.prototype.onClick_domain = function(id) {
+        sweetAlert('You have selected domain ' + id);
     };
 
     return TREE;
