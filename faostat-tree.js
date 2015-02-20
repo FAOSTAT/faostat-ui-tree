@@ -49,17 +49,31 @@ define(['jquery',
                 if (typeof json == 'string')
                     json = $.parseJSON(response);
 
+                /* Buffer. */
+                var buffer = [];
                 var payload = [];
-                payload.push({
-                    id: 'Q',
-                    text: 'Production',
-                    parent: '#'
-                });
-                payload.push({
-                    id: 'QC',
-                    text: 'Crops',
-                    parent: 'Q'
-                });
+
+                /* Iterate over domains. */
+                for (var i = 0 ; i < json.length ; i++) {
+
+                    /* Create group node. */
+                    if ($.inArray(json[i][0], buffer) < 0) {
+                        buffer.push(json[i][0]);
+                        payload.push({
+                            id: json[i][0],
+                            text: json[i][1],
+                            parent: '#'
+                        });
+                    }
+
+                    /* Add domain node. */
+                    payload.push({
+                        id: json[i][2],
+                        text: json[i][3],
+                        parent: json[i][0]
+                    });
+
+                }
 
                 /* Init JSTree. */
                 $('#' + _this.CONFIG.placeholder_id).jstree({
