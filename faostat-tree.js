@@ -1,10 +1,8 @@
 define(['jquery',
         'handlebars',
-        'text!faostat_tree/html/templates.html',
-        'i18n!faostat_tree/nls/translate',
         'bootstrap',
         'jstree',
-        'sweet-alert'], function ($, Handlebars, templates, translate) {
+        'sweet-alert'], function ($, Handlebars) {
 
     'use strict';
 
