@@ -1,3 +1,7 @@
-
+/* Override Fenix Tree */
+.jstree-default-responsive .jstree-anchor {
+  white-space: normal;
+  line-height: normal;
+  height: auto; }
 
 /*# sourceMappingURL=faostat-tree.css.map */

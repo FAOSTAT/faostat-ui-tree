@@ -14,7 +14,8 @@ define(['jquery',
             lang: 'E',
             placeholder_id: 'placeholder',
             datasource: 'faostat',
-            url_rest: 'http://faostat3.fao.org/wds/rest/groupsanddomains'
+            url_rest: 'http://faostat3.fao.org/wds/rest/groupsanddomains',
+            max_label_width: null
         };
 
     }
@@ -66,10 +67,19 @@ define(['jquery',
                         });
                     }
 
+                    var label = json[i][3];
+                    //if (_this.CONFIG.max_label_width != null) {
+                    //    for (var j = 0; j < label.length; j++) {
+                    //        if (j >= _this.CONFIG.max_label_width && label[j] == ' ')
+                    //            label[j] = '\n';
+                    //    }
+                    //    console.log(label);
+                    //}
+
                     /* Add domain node. */
                     payload.push({
                         id: json[i][2],
-                        text: json[i][3],
+                        text: label,
                         parent: json[i][0]
                     });
 
@@ -83,7 +93,8 @@ define(['jquery',
                     'core': {
                         'data': payload,
                         'themes': {
-                            'icons': false
+                            'icons': false,
+                            'responsive': true
                         }
                     },
 
