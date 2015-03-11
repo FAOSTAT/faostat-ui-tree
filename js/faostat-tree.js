@@ -1,6 +1,6 @@
 define(['jquery',
         'jstree',
-        'sweet-alert'], function ($) {
+        'sweetAlert'], function ($) {
 
     'use strict';
 
