@@ -94,12 +94,34 @@ define(['jquery',
 
                 });
 
+                _this.tree.on('select_node.jstree', function (e, data) {
+                    var node = $('#' + data.node.id);
+                    if (data.node.parent == '#')
+                        _this.tree.jstree().is_open() ? _this.tree.jstree().close_node(node) : _this.tree.jstree().open_node(node);
+                });
+
                 _this.tree.on('changed.jstree', function (e, data) {
+
+                    /* Check whether is group or domain. */
                     if (data.node.parent == '#') {
+
+                        ///* Open or close node. */
+                        //console.log(_this.tree.jstree().is_open());
+                        //if (_this.tree.jstree().is_open())
+                        //    _this.tree.jstree().close_node($('#' + data.node.id));
+                        //else
+                        //    _this.tree.jstree().open_node($('#' + data.node.id));
+
+                        /* Invoke group callback. */
                         _this.CONFIG.onClick_group != null ? _this.CONFIG.onClick_group(data.node.id) : _this.onClick_group(data.node.id);
+
                     } else {
+
+                        /* Invoke domain callback. */
                         _this.CONFIG.onClick_domain != null ? _this.CONFIG.onClick_domain(data.node.id) : _this.onClick_domain(data.node.id);
+
                     }
+
                 });
 
             }
