@@ -10,8 +10,10 @@ define(['jquery',
 
         this.CONFIG = {
             lang: 'E',
-            placeholder_id: 'placeholder',
             datasource: 'faostat',
+            max_label_width: null,
+            prefix: 'faostat_tree_',
+            placeholder_id: 'placeholder',
             url_rest: 'http://faostat3.fao.org/wds/rest/groupsanddomains'
         };
 
@@ -81,7 +83,8 @@ define(['jquery',
                     'core': {
                         'data': payload,
                         'themes': {
-                            'icons': false
+                            'icons': false,
+                            'responsive': true
                         }
                     },
 
@@ -92,11 +95,25 @@ define(['jquery',
 
                 });
 
-                _this.tree.on('changed.jstree', function (e, data) {
+                _this.tree.on('select_node.jstree', function (e, data) {
+                    var node = $('#' + data.node.id);
                     if (data.node.parent == '#')
-                        _this.onClick_group(data.node.id);
-                    else
-                        _this.onClick_domain(data.node.id);
+                        _this.tree.jstree().is_open() ? _this.tree.jstree().close_node(node) : _this.tree.jstree().open_node(node);
+                });
+
+                _this.tree.on('changed.jstree', function (e, data) {
+
+                    /* Check whether is group or domain. */
+                    if (data.node.parent == '#') {
+
+                        amplify.publish(_this.CONFIG.prefix + 'group_event', {id: data.node.id});
+
+                    } else {
+
+                        amplify.publish(_this.CONFIG.prefix + 'domain_event', {id: data.node.id});
+
+                    }
+
                 });
 
             }
@@ -105,12 +122,16 @@ define(['jquery',
 
     };
 
-    TREE.prototype.onClick_group = function(id) {
-        sweetAlert('You have selected group ' + id);
+    TREE.prototype.onGroupClick = function(callback) {
+        amplify.subscribe(this.CONFIG.prefix + 'group_event', function(event_data) {
+            callback(event_data.id);
+        });
     };
 
-    TREE.prototype.onClick_domain = function(id) {
-        sweetAlert('You have selected domain ' + id);
+    TREE.prototype.onDomainClick = function(callback) {
+        amplify.subscribe(this.CONFIG.prefix + 'domain_event', function(event_data) {
+            callback(event_data.id);
+        });
     };
 
     return TREE;
