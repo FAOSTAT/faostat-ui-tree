@@ -2,7 +2,7 @@ define(function() {
 
     var config = {
         paths: {
-            FAOSTAT_TREE: 'faostat-tree'
+            FAOSTAT_UI_TREE: 'faostat-ui-tree'
         },
         shim: {
             jstree: {

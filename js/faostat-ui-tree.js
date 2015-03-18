@@ -1,15 +1,17 @@
 define(['jquery',
         'handlebars',
+        'FAOSTAT_UI_COMMONS',
         'bootstrap',
         'jstree',
-        'sweet-alert'], function ($, Handlebars) {
+        'sweetAlert'], function ($, Handlebars, Commons) {
 
     'use strict';
 
     function TREE() {
 
         this.CONFIG = {
-            lang: 'E',
+            lang: 'en',
+            lang_faostat: 'E',
             datasource: 'faostat',
             max_label_width: null,
             prefix: 'faostat_tree_',
@@ -25,7 +27,10 @@ define(['jquery',
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
 
         /* Fix the language, if needed. */
-        this.CONFIG.lang = this.CONFIG.lang != null ? this.CONFIG.lang : 'E';
+        this.CONFIG.lang = this.CONFIG.lang != null ? this.CONFIG.lang : 'en';
+
+        /* Store FAOSTAT language. */
+        this.CONFIG.lang_faostat = Commons.iso2faostat(this.CONFIG.lang);
 
         /* this... */
         var _this = this;
@@ -34,7 +39,7 @@ define(['jquery',
         this.tree = $('#' + _this.CONFIG.placeholder_id);
 
         /* REST URL */
-        var url = this.CONFIG.url_rest + '/' + this.CONFIG.datasource + '/' + this.CONFIG.lang;
+        var url = this.CONFIG.url_rest + '/' + this.CONFIG.datasource + '/' + this.CONFIG.lang_faostat;
 
         /* Load groups and domains from the DB. */
         $.ajax({
