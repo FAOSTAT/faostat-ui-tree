@@ -1,7 +1,8 @@
 define(['jquery',
+        'handlebars',
+        'bootstrap',
         'jstree',
-        'amplify',
-        'sweetAlert'], function ($) {
+        'sweet-alert'], function ($, Handlebars) {
 
     'use strict';
 
