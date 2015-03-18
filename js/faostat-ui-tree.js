@@ -1,6 +1,7 @@
 define(['jquery',
         'handlebars',
         'FAOSTAT_UI_COMMONS',
+        'amplify',
         'bootstrap',
         'jstree',
         'sweetAlert'], function ($, Handlebars, Commons) {
@@ -11,6 +12,8 @@ define(['jquery',
 
         this.CONFIG = {
             lang: 'en',
+            group: null,
+            domain: null,
             lang_faostat: 'E',
             datasource: 'faostat',
             max_label_width: null,
@@ -106,19 +109,26 @@ define(['jquery',
                         _this.tree.jstree().is_open() ? _this.tree.jstree().close_node(node) : _this.tree.jstree().open_node(node);
                 });
 
+                /* Check whether is group or domain. */
                 _this.tree.on('changed.jstree', function (e, data) {
-
-                    /* Check whether is group or domain. */
                     if (data.node.parent == '#') {
-
                         amplify.publish(_this.CONFIG.prefix + 'group_event', {id: data.node.id});
-
                     } else {
-
                         amplify.publish(_this.CONFIG.prefix + 'domain_event', {id: data.node.id});
-
                     }
+                });
 
+                /* Show required domain. */
+                _this.tree.on('ready.jstree', function (e, data) {
+                    var node;
+                    if (_this.CONFIG.group != null) {
+                        node = $('#' + _this.CONFIG.group.toUpperCase());
+                        _this.tree.jstree().open_node(node);
+                    }
+                    if (_this.CONFIG.domain != null) {
+                        node = $('#' + _this.CONFIG.domain.toUpperCase());
+                        _this.tree.jstree().select_node(node);
+                    }
                 });
 
             }
