@@ -128,6 +128,9 @@ define(['jquery',
                     if (_this.CONFIG.domain != null) {
                         node = $('#' + _this.CONFIG.domain.toUpperCase());
                         _this.tree.jstree().select_node(node);
+                    } else {
+                        node = $('#' + _this.CONFIG.group.toUpperCase());
+                        _this.tree.jstree().select_node(node);
                     }
                 });
 
