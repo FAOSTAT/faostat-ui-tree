@@ -2,6 +2,6 @@ define({
     root : {
 
     },
-    F : true,
-    S : true
+    fr : true,
+    es : true
 });
