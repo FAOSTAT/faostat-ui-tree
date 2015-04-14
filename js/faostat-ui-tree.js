@@ -143,6 +143,7 @@ define(['jquery',
     TREE.prototype.onGroupClick = function(callback) {
         amplify.subscribe(this.CONFIG.prefix + 'group_event', function(event_data) {
             callback(event_data.id);
+            //Backbone.history.navigate('/es/download/q/qc/bulk/', {trigger: true});
         });
     };
 
