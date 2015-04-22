@@ -19,7 +19,7 @@ define(['jquery',
             max_label_width: null,
             prefix: 'faostat_tree_',
             placeholder_id: 'placeholder',
-            url_rest: 'http://faostat3.fao.org/wds/rest/groupsanddomains'
+            url_rest: 'http://faostat3.fao.org/wds/rest'
         };
 
     }
@@ -120,9 +120,10 @@ define(['jquery',
                     node = $('#' + _this.CONFIG.group.toUpperCase());
                     _this.tree.jstree().select_node(node);
                 }
+
             });
 
-        });
+        }, this.CONFIG.url_rest);
 
     };
 
