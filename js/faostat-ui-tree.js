@@ -1,10 +1,7 @@
 define(['jquery',
-        'handlebars',
         'FAOSTAT_UI_COMMONS',
-        'amplify',
-        'bootstrap',
         'jstree',
-        'sweetAlert'], function ($, Handlebars, Commons) {
+        'sweetAlert'], function ($, Commons) {
 
     'use strict';
 
@@ -14,14 +11,23 @@ define(['jquery',
             lang: 'en',
             group: null,
             domain: null,
+            code:null,
+
             lang_faostat: 'E',
             datasource: 'faostat',
             max_label_width: null,
             prefix: 'faostat_tree_',
             placeholder_id: 'placeholder',
-            url_rest: 'http://faostat3.fao.org/wds/rest'
-        };
+            url_rest: 'http://faostat3.fao.org/wds/rest',
 
+            // events to destroy
+            callback: {
+                onClick: null,
+                onGroupClick: null,
+                onDomainClick: null
+            }
+
+        };
     }
 
     TREE.prototype.init = function(config) {
@@ -35,11 +41,17 @@ define(['jquery',
         /* Store FAOSTAT language. */
         this.CONFIG.lang_faostat = Commons.iso2faostat(this.CONFIG.lang);
 
+        // TODO: add other rendering
+        this.render();
+    };
+
+    TREE.prototype.render = function() {
+
         /* this... */
         var _this = this;
 
-        /* Store JQuery object.. */
-        this.tree = $('#' + _this.CONFIG.placeholder_id);
+         /* Store JQuery object.. */
+        this.tree = $(this.CONFIG.placeholder_id).length > 0? $(this.CONFIG.placeholder_id): $("#" + this.CONFIG.placeholder_id);
 
         /* Fetch FAOSTAT groups and domains. */
         Commons.wdsclient('groupsanddomains', this.CONFIG, function(json) {
@@ -94,51 +106,47 @@ define(['jquery',
             _this.tree.on('select_node.jstree', function (e, data) {
                 var node = $('#' + data.node.id);
                 if (data.node.parent == '#')
-                    _this.tree.jstree().is_open() ? _this.tree.jstree().close_node(node) : _this.tree.jstree().open_node(node);
+                    _this.tree.jstree().is_open()? _this.tree.jstree().close_node(node): _this.tree.jstree().open_node(node);
             });
 
             /* Check whether is group or domain. */
             _this.tree.on('changed.jstree', function (e, data) {
                 if (data.node.parent == '#') {
-                    amplify.publish(_this.CONFIG.prefix + 'group_event', {id: data.node.id});
+                    if (_this.CONFIG.callback.onGroupClick) {
+                        _this.CONFIG.callback.onGroupClick({id: data.node.id});
+                    }
                 } else {
-                    amplify.publish(_this.CONFIG.prefix + 'domain_event', {id: data.node.id});
+                    if (_this.CONFIG.callback.onDomainClick) {
+                        _this.CONFIG.callback.onDomainClick({id: data.node.id});
+                    }
+                }
+                if (_this.CONFIG.callback.onClick) {
+                    _this.CONFIG.callback.onClick({id: data.node.id});
                 }
             });
 
             /* Show required domain. */
-            _this.tree.on('ready.jstree', function (e, data) {
-                var node;
-                if (_this.CONFIG.group != null) {
-                    node = $('#' + _this.CONFIG.group.toUpperCase());
-                    _this.tree.jstree().open_node(node);
-                }
-                if (_this.CONFIG.domain != null) {
-                    node = $('#' + _this.CONFIG.domain.toUpperCase());
-                    _this.tree.jstree().select_node(node);
-                } else {
-                    node = $('#' + _this.CONFIG.group.toUpperCase());
-                    _this.tree.jstree().select_node(node);
-                }
-
+            _this.tree.on('ready.jstree', function () {
+                _this.selectDefaultCode();
             });
 
         }, this.CONFIG.url_rest);
 
     };
 
-    TREE.prototype.onGroupClick = function(callback) {
-        amplify.subscribe(this.CONFIG.prefix + 'group_event', function(event_data) {
-            callback(event_data.id);
-        });
+    TREE.prototype.selectDefaultCode = function() {
+        if (this.CONFIG.code)
+            this.tree.jstree().select_node(this.CONFIG.code);
+        else if (this.CONFIG.domain)
+            this.tree.jstree().select_node(this.CONFIG.domain);
+        else if (this.CONFIG.group)
+            this.tree.jstree().select_node(this.CONFIG.group);
     };
 
-    TREE.prototype.onDomainClick = function(callback) {
-        amplify.subscribe(this.CONFIG.prefix + 'domain_event', function(event_data) {
-            callback(event_data.id);
-        });
+    TREE.prototype.destroy = function() {
+        console.log("destroy");
+        this.tree.jstree("destroy");
     };
-
     return TREE;
 
 });
