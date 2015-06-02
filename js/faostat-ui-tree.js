@@ -1,17 +1,20 @@
 define(['jquery',
-        'FAOSTAT_UI_COMMONS',
+        'faostat_commons',
+        'wds_client',
         'jstree',
-        'sweetAlert'], function ($, Commons) {
+        'sweetAlert'], function ($, FAOSTATCommons, WDSClient) {
 
     'use strict';
 
     function TREE() {
 
         this.CONFIG = {
+
+            w: null,
+            code:null,
             lang: 'en',
             group: null,
             domain: null,
-            code:null,
 
             lang_faostat: 'E',
             datasource: 'faostat',
@@ -19,8 +22,9 @@ define(['jquery',
             prefix: 'faostat_tree_',
             placeholder_id: 'placeholder',
             url_rest: 'http://faostat3.fao.org/wds/rest',
+            url_wds_crud: 'http://fenixapps2.fao.org/wds_5.1/rest/crud',
 
-            // events to destroy
+            /* Events to destroy. */
             callback: {
                 onClick: null,
                 onGroupClick: null,
@@ -28,6 +32,7 @@ define(['jquery',
             }
 
         };
+
     }
 
     TREE.prototype.init = function(config) {
@@ -39,10 +44,17 @@ define(['jquery',
         this.CONFIG.lang = this.CONFIG.lang != null ? this.CONFIG.lang : 'en';
 
         /* Store FAOSTAT language. */
-        this.CONFIG.lang_faostat = Commons.iso2faostat(this.CONFIG.lang);
+        this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
 
-        // TODO: add other rendering
+        /* Initiate the WDS client. */
+        this.CONFIG.w = new WDSClient({
+            datasource: this.CONFIG.datasource,
+            serviceUrl: this.CONFIG.url_wds_crud
+        });
+
+        /* Render. */
         this.render();
+
     };
 
     TREE.prototype.render = function() {
@@ -54,7 +66,7 @@ define(['jquery',
         this.tree = $(this.CONFIG.placeholder_id).length > 0? $(this.CONFIG.placeholder_id): $("#" + this.CONFIG.placeholder_id);
 
         /* Fetch FAOSTAT groups and domains. */
-        Commons.wdsclient('groupsanddomains', this.CONFIG, function(json) {
+        this.CONFIG.w.wdsclient('groupsanddomains', this.CONFIG, function(json) {
 
             /* Buffer. */
             var buffer = [];
