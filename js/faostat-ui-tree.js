@@ -66,83 +66,96 @@ define(['jquery',
         this.tree = $(this.CONFIG.placeholder_id).length > 0? $(this.CONFIG.placeholder_id): $("#" + this.CONFIG.placeholder_id);
 
         /* Fetch FAOSTAT groups and domains. */
-        this.CONFIG.w.wdsclient('groupsanddomains', this.CONFIG, function(json) {
+        this.CONFIG.w.get_services_client({
 
-            /* Buffer. */
-            var buffer = [];
-            var payload = [];
+            service_name: 'groupsanddomains',
 
-            /* Iterate over domains. */
-            for (var i = 0 ; i < json.length ; i++) {
+            parameters: {
+                datasource: this.CONFIG.datasource,
+                lang_faostat: this.CONFIG.lang_faostat
+            },
 
-                /* Create group node. */
-                if ($.inArray(json[i][0], buffer) < 0) {
-                    buffer.push(json[i][0]);
+            wds_url:  this.CONFIG.url_rest,
+
+            success: function(json) {
+
+                /* Buffer. */
+                var buffer = [];
+                var payload = [];
+
+                /* Iterate over domains. */
+                for (var i = 0 ; i < json.length ; i++) {
+
+                    /* Create group node. */
+                    if ($.inArray(json[i][0], buffer) < 0) {
+                        buffer.push(json[i][0]);
+                        payload.push({
+                            id: json[i][0],
+                            text: json[i][1],
+                            parent: '#'
+                        });
+                    }
+
+                    /* Add domain node. */
                     payload.push({
-                        id: json[i][0],
-                        text: json[i][1],
-                        parent: '#'
+                        id: json[i][2],
+                        text: json[i][3],
+                        parent: json[i][0]
                     });
+
                 }
 
-                /* Add domain node. */
-                payload.push({
-                    id: json[i][2],
-                    text: json[i][3],
-                    parent: json[i][0]
+                /* Init JSTree. */
+                _this.tree.jstree({
+
+                    'plugins': ['unique', 'search', 'types', 'wholerow'],
+
+                    'core': {
+                        'data': payload,
+                        'themes': {
+                            'icons': false,
+                            'responsive': true
+                        }
+                    },
+
+                    'search': {
+                        'show_only_matches': true,
+                        'close_opened_onclear': false
+                    }
+
+                });
+
+                /* Implement node selection. */
+                _this.tree.on('select_node.jstree', function (e, data) {
+                    var node = $('#' + data.node.id);
+                    if (data.node.parent == '#')
+                        _this.tree.jstree().is_open()? _this.tree.jstree().close_node(node): _this.tree.jstree().open_node(node);
+                });
+
+                /* Check whether is group or domain. */
+                _this.tree.on('changed.jstree', function (e, data) {
+                    if (data.node.parent == '#') {
+                        if (_this.CONFIG.callback.onGroupClick) {
+                            _this.CONFIG.callback.onGroupClick({id: data.node.id});
+                        }
+                    } else {
+                        if (_this.CONFIG.callback.onDomainClick) {
+                            _this.CONFIG.callback.onDomainClick({id: data.node.id});
+                        }
+                    }
+                    if (_this.CONFIG.callback.onClick) {
+                        _this.CONFIG.callback.onClick({id: data.node.id});
+                    }
+                });
+
+                /* Show required domain. */
+                _this.tree.on('ready.jstree', function () {
+                    _this.selectDefaultCode();
                 });
 
             }
 
-            /* Init JSTree. */
-            _this.tree.jstree({
-
-                'plugins': ['unique', 'search', 'types', 'wholerow'],
-
-                'core': {
-                    'data': payload,
-                    'themes': {
-                        'icons': false,
-                        'responsive': true
-                    }
-                },
-
-                'search': {
-                    'show_only_matches': true,
-                    'close_opened_onclear': false
-                }
-
-            });
-
-            /* Implement node selection. */
-            _this.tree.on('select_node.jstree', function (e, data) {
-                var node = $('#' + data.node.id);
-                if (data.node.parent == '#')
-                    _this.tree.jstree().is_open()? _this.tree.jstree().close_node(node): _this.tree.jstree().open_node(node);
-            });
-
-            /* Check whether is group or domain. */
-            _this.tree.on('changed.jstree', function (e, data) {
-                if (data.node.parent == '#') {
-                    if (_this.CONFIG.callback.onGroupClick) {
-                        _this.CONFIG.callback.onGroupClick({id: data.node.id});
-                    }
-                } else {
-                    if (_this.CONFIG.callback.onDomainClick) {
-                        _this.CONFIG.callback.onDomainClick({id: data.node.id});
-                    }
-                }
-                if (_this.CONFIG.callback.onClick) {
-                    _this.CONFIG.callback.onClick({id: data.node.id});
-                }
-            });
-
-            /* Show required domain. */
-            _this.tree.on('ready.jstree', function () {
-                _this.selectDefaultCode();
-            });
-
-        }, this.CONFIG.url_rest);
+        });
 
     };
 
