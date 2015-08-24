@@ -1,6 +1,6 @@
 define(['jquery',
         'faostat_commons',
-        'wds_client',
+        'fx-common/WDSClient',
         'jstree',
         'sweetAlert'], function ($, FAOSTATCommons, WDSClient) {
 
