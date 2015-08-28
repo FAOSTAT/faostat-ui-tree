@@ -114,7 +114,8 @@ define(['jquery',
                         'data': payload,
                         'themes': {
                             'icons': false,
-                            'responsive': true
+                            'responsive': true,
+                            stripes: false
                         }
                     },
 

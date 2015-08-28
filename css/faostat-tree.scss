@@ -1,13 +1,13 @@
-/* Override Fenix Tree */
-
-.jstree-default-responsive{
-
-  .jstree-anchor{
+.jstree-default-responsive {
+  .jstree-anchor {
     white-space: normal;
     line-height: normal;
     height: auto;
   }
+}
 
+li[role="treeitem"]:nth-child(odd) {
+  background-color: #fff !important;
 }
 
 
