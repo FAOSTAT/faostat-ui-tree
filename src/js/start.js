@@ -1,3 +1,4 @@
+/*global define*/
 define(['jquery',
         'faostat_commons',
         'fx-common/WDSClient',
@@ -11,7 +12,7 @@ define(['jquery',
         this.CONFIG = {
 
             w: null,
-            code:null,
+            code: null,
             lang: 'en',
             group: null,
             domain: null,
@@ -35,13 +36,13 @@ define(['jquery',
 
     }
 
-    TREE.prototype.init = function(config) {
+    TREE.prototype.init = function (config) {
 
         /* Extend default configuration. */
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
 
         /* Fix the language, if needed. */
-        this.CONFIG.lang = this.CONFIG.lang != null ? this.CONFIG.lang : 'en';
+        this.CONFIG.lang = this.CONFIG.lang !== null ? this.CONFIG.lang : 'en';
 
         /* Store FAOSTAT language. */
         this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
@@ -57,13 +58,16 @@ define(['jquery',
 
     };
 
-    TREE.prototype.render = function() {
+    TREE.prototype.render = function () {
 
         /* this... */
-        var _this = this;
+        var that = this,
+            i,
+            buffer,
+            payload;
 
          /* Store JQuery object.. */
-        this.tree = $(this.CONFIG.placeholder_id).length > 0? $(this.CONFIG.placeholder_id): $("#" + this.CONFIG.placeholder_id);
+        this.tree = $(this.CONFIG.placeholder_id).length > 0 ? $(this.CONFIG.placeholder_id) : $("#" + this.CONFIG.placeholder_id);
 
         /* Fetch FAOSTAT groups and domains. */
         this.CONFIG.w.get_services_client({
@@ -77,14 +81,14 @@ define(['jquery',
 
             wds_url:  this.CONFIG.url_rest,
 
-            success: function(json) {
+            success: function (json) {
 
                 /* Buffer. */
-                var buffer = [];
-                var payload = [];
+                buffer = [];
+                payload = [];
 
                 /* Iterate over domains. */
-                for (var i = 0 ; i < json.length ; i++) {
+                for (i = 0; i < json.length; i += 1) {
 
                     /* Create group node. */
                     if ($.inArray(json[i][0], buffer) < 0) {
@@ -106,52 +110,52 @@ define(['jquery',
                 }
 
                 /* Init JSTree. */
-                _this.tree.jstree({
+                that.tree.jstree({
 
-                    'plugins': ['unique', 'search', 'types', 'wholerow'],
+                    plugins: ['unique', 'search', 'types', 'wholerow'],
 
-                    'core': {
-                        'data': payload,
-                        'themes': {
-                            'icons': false,
-                            'responsive': true,
-                            stripes: false
+                    core: {
+                        data: payload,
+                        themes: {
+                            icons: false,
+                            responsive: true
                         }
                     },
 
-                    'search': {
-                        'show_only_matches': true,
-                        'close_opened_onclear': false
+                    search: {
+                        show_only_matches: true,
+                        close_opened_onclear: false
                     }
 
                 });
 
                 /* Implement node selection. */
-                _this.tree.on('select_node.jstree', function (e, data) {
+                that.tree.on('select_node.jstree', function (e, data) {
                     var node = $('#' + data.node.id);
-                    if (data.node.parent == '#')
-                        _this.tree.jstree().is_open()? _this.tree.jstree().close_node(node): _this.tree.jstree().open_node(node);
+                    if (data.node.parent === '#') {
+                        data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
+                    }
                 });
 
                 /* Check whether is group or domain. */
-                _this.tree.on('changed.jstree', function (e, data) {
-                    if (data.node.parent == '#') {
-                        if (_this.CONFIG.callback.onGroupClick) {
-                            _this.CONFIG.callback.onGroupClick({id: data.node.id});
+                that.tree.on('changed.jstree', function (e, data) {
+                    if (data.node.parent === '#') {
+                        if (that.CONFIG.callback.onGroupClick) {
+                            that.CONFIG.callback.onGroupClick({id: data.node.id});
                         }
                     } else {
-                        if (_this.CONFIG.callback.onDomainClick) {
-                            _this.CONFIG.callback.onDomainClick({id: data.node.id});
+                        if (that.CONFIG.callback.onDomainClick) {
+                            that.CONFIG.callback.onDomainClick({id: data.node.id});
                         }
                     }
-                    if (_this.CONFIG.callback.onClick) {
-                        _this.CONFIG.callback.onClick({id: data.node.id});
+                    if (that.CONFIG.callback.onClick) {
+                        that.CONFIG.callback.onClick({id: data.node.id});
                     }
                 });
 
                 /* Show required domain. */
-                _this.tree.on('ready.jstree', function () {
-                    _this.selectDefaultCode();
+                that.tree.on('ready.jstree', function () {
+                    that.selectDefaultCode();
                 });
 
             }
@@ -160,18 +164,20 @@ define(['jquery',
 
     };
 
-    TREE.prototype.selectDefaultCode = function() {
-        if (this.CONFIG.code)
+    TREE.prototype.selectDefaultCode = function () {
+        if (this.CONFIG.code) {
             this.tree.jstree().select_node(this.CONFIG.code);
-        else if (this.CONFIG.domain)
+        } else if (this.CONFIG.domain) {
             this.tree.jstree().select_node(this.CONFIG.domain);
-        else if (this.CONFIG.group)
+        } else if (this.CONFIG.group) {
             this.tree.jstree().select_node(this.CONFIG.group);
+        }
     };
 
-    TREE.prototype.destroy = function() {
+    TREE.prototype.destroy = function () {
         this.tree.jstree("destroy");
     };
+
     return TREE;
 
 });
