@@ -169,7 +169,6 @@ define(['jquery',
     };
 
     TREE.prototype.destroy = function() {
-        console.log("destroy");
         this.tree.jstree("destroy");
     };
     return TREE;
