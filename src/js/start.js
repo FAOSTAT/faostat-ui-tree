@@ -161,7 +161,9 @@ define(['jquery',
                     that.selectDefaultCode();
 
                     /* Invoke onTreeRendered function. */
-                    that.CONFIG.callback.onTreeRendered(that.CONFIG.default_code);
+                    if (that.CONFIG.callback.onTreeRendered) {
+                        that.CONFIG.callback.onTreeRendered(that.CONFIG.default_code);
+                    }
 
                 });
 
