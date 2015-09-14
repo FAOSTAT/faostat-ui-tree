@@ -1,9 +1,9 @@
 /*global define*/
 define(['jquery',
         'faostat_commons',
-        'fx-common/WDSClient',
+        'faostatapiclient',
         'jstree',
-        'sweetAlert'], function ($, FAOSTATCommons, WDSClient) {
+        'sweetAlert'], function ($, FAOSTATCommons, FAOSTATAPIClient) {
 
     'use strict';
 
@@ -48,11 +48,8 @@ define(['jquery',
         /* Store FAOSTAT language. */
         this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
 
-        /* Initiate the WDS client. */
-        this.CONFIG.w = new WDSClient({
-            datasource: this.CONFIG.datasource,
-            serviceUrl: this.CONFIG.url_wds_crud
-        });
+        /* Initiate FAOSTAT API's client. */
+        this.CONFIG.api = new FAOSTATAPIClient();
 
         /* Render. */
         this.render();
@@ -61,117 +58,107 @@ define(['jquery',
 
     TREE.prototype.render = function () {
 
-        /* this... */
-        var that = this,
-            i,
-            buffer,
-            payload;
-
-         /* Store JQuery object.. */
+        /* Store JQuery object.. */
         this.tree = $(this.CONFIG.placeholder_id).length > 0 ? $(this.CONFIG.placeholder_id) : $("#" + this.CONFIG.placeholder_id);
 
         /* Fetch FAOSTAT groups and domains. */
-        this.CONFIG.w.get_services_client({
+        this.CONFIG.api.groupsanddomains({
 
-            service_name: 'groupsanddomains',
+            success: this.process_api_response,
+            context: this
 
-            parameters: {
-                datasource: this.CONFIG.datasource,
-                lang_faostat: this.CONFIG.lang_faostat
+        });
+
+    };
+
+    TREE.prototype.process_api_response = function (json) {
+
+        /* Buffer. */
+        var buffer = [],
+            payload = [],
+            i,
+            that = this;
+
+        /* Iterate over domains. */
+        for (i = 0; i < json.data.length; i += 1) {
+
+            /* Create group node. */
+            if ($.inArray(json.data[i].GroupCode, buffer) < 0) {
+                buffer.push(json.data[i].GroupCode);
+                payload.push({
+                    id: json.data[i].GroupCode,
+                    text: json.data[i].GroupNameE,
+                    parent: '#'
+                });
+            }
+
+            /* Add domain node. */
+            payload.push({
+                id: json.data[i].DomainCode,
+                text: json.data[i].DomainNameE,
+                parent: json.data[i].GroupCode
+            });
+
+        }
+
+        /* Init JSTree. */
+        this.tree.jstree({
+
+            plugins: ['unique', 'search', 'types', 'wholerow'],
+
+            core: {
+                data: payload,
+                themes: {
+                    icons: false,
+                    responsive: true
+                }
             },
 
-            wds_url:  this.CONFIG.url_rest,
+            search: {
+                show_only_matches: true,
+                close_opened_onclear: false
+            }
 
-            success: function (json) {
+        });
 
-                /* Buffer. */
-                buffer = [];
-                payload = [];
+        /* Implement node selection. */
+        that.tree.on('activate_node.jstree', function (e, data) {
 
-                /* Iterate over domains. */
-                for (i = 0; i < json.length; i += 1) {
+            /* Fetch node. */
+            var node = $('#' + data.node.id);
 
-                    /* Create group node. */
-                    if ($.inArray(json[i][0], buffer) < 0) {
-                        buffer.push(json[i][0]);
-                        payload.push({
-                            id: json[i][0],
-                            text: json[i][1],
-                            parent: '#'
-                        });
-                    }
-
-                    /* Add domain node. */
-                    payload.push({
-                        id: json[i][2],
-                        text: json[i][3],
-                        parent: json[i][0]
-                    });
-
+            /* Generic click listener, or specific listeners for groups and domains. */
+            if (that.CONFIG.callback.onClick) {
+                if (data.node.parent === '#') {
+                    data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
                 }
-
-                /* Init JSTree. */
-                that.tree.jstree({
-
-                    plugins: ['unique', 'search', 'types', 'wholerow'],
-
-                    core: {
-                        data: payload,
-                        themes: {
-                            icons: false,
-                            responsive: true
-                        }
-                    },
-
-                    search: {
-                        show_only_matches: true,
-                        close_opened_onclear: false
+                if (that.CONFIG.callback.onClick) {
+                    that.CONFIG.callback.onClick({id: data.node.id});
+                }
+            } else {
+                if (data.node.parent === '#') {
+                    data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
+                    if (that.CONFIG.callback.onGroupClick) {
+                        that.CONFIG.callback.onGroupClick({id: data.node.id});
                     }
-
-                });
-
-                /* Implement node selection. */
-                that.tree.on('activate_node.jstree', function (e, data) {
-
-                    /* Fetch node. */
-                    var node = $('#' + data.node.id);
-
-                    /* Generic click listener, or specific listeners for gourps and domains. */
-                    if (that.CONFIG.callback.onClick) {
-                        if (data.node.parent === '#') {
-                            data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
-                        }
-                        if (that.CONFIG.callback.onClick) {
-                            that.CONFIG.callback.onClick({id: data.node.id});
-                        }
-                    } else {
-                        if (data.node.parent === '#') {
-                            data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
-                            if (that.CONFIG.callback.onGroupClick) {
-                                that.CONFIG.callback.onGroupClick({id: data.node.id});
-                            }
-                        } else {
-                            if (that.CONFIG.callback.onDomainClick) {
-                                that.CONFIG.callback.onDomainClick({id: data.node.id});
-                            }
-                        }
+                } else {
+                    if (that.CONFIG.callback.onDomainClick) {
+                        that.CONFIG.callback.onDomainClick({id: data.node.id});
                     }
+                }
+            }
 
-                });
+        });
 
-                /* Show required domain. */
-                that.tree.on('ready.jstree', function () {
+        /* Show required domain. */
+        this.tree.on('ready.jstree', function () {
 
-                    /* set and select default code. */
-                    that.selectDefaultCode();
+            /* set and select default code. */
+            that.selectDefaultCode();
 
-                    /* Invoke onTreeRendered function. */
-                    if (that.CONFIG.callback.onTreeRendered) {
-                        that.CONFIG.callback.onTreeRendered(that.CONFIG.default_code);
-                    }
-
-                });
-
+            /* Invoke onTreeRendered function. */
+            if (that.CONFIG.callback.onTreeRendered) {
+                that.CONFIG.callback.onTreeRendered(that.CONFIG.default_code);
             }
 
         });
