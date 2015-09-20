@@ -83,11 +83,11 @@ define(['jquery',
         for (i = 0; i < json.data.length; i += 1) {
 
             /* Create group node. */
-            if ($.inArray(json.data[i].GroupCode, buffer) < 0) {
-                buffer.push(json.data[i].GroupCode);
+            if ($.inArray(json.data[i].code, buffer) < 0) {
+                buffer.push(json.data[i].code);
                 payload.push({
-                    id: json.data[i].GroupCode,
-                    text: json.data[i].GroupNameE,
+                    id: json.data[i].code,
+                    text: json.data[i].label,
                     parent: '#'
                 });
             }
@@ -96,7 +96,7 @@ define(['jquery',
             payload.push({
                 id: json.data[i].DomainCode,
                 text: json.data[i].DomainNameE,
-                parent: json.data[i].GroupCode
+                parent: json.data[i].code
             });
 
         }
