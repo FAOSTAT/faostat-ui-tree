@@ -123,9 +123,10 @@ define(['jquery',
         });
 
         /* Implement node selection. */
-        that.tree.on('activate_node.jstree', function (e, data) {
+        this.tree.on('activate_node.jstree', function (e, data) {
 
             /* Fetch node. */
+            // TODO: improve this. the ID is the domain/group code
             var node = $('#' + data.node.id);
 
             /* Generic click listener, or specific listeners for groups and domains. */
@@ -177,6 +178,11 @@ define(['jquery',
             this.CONFIG.default_code = this.CONFIG.group;
             this.tree.jstree().select_node(this.CONFIG.group);
         }
+    };
+
+    TREE.prototype.getCodeType = function () {
+        var node = $('#' + this.tree.jstree('get_selected'));
+        return this.tree.jstree().is_leaf(node) ? 'domain' : 'group';
     };
 
     TREE.prototype.destroy = function () {
