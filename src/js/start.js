@@ -2,8 +2,9 @@
 define(['jquery',
         'faostat_commons',
         'faostatapiclient',
+        'q',
         'jstree',
-        'sweetAlert'], function ($, FAOSTATCommons, FAOSTATAPIClient) {
+        'sweetAlert'], function ($, FAOSTATCommons, FAOSTATAPIClient, Q) {
 
     'use strict';
 
@@ -58,15 +59,15 @@ define(['jquery',
 
     TREE.prototype.render = function () {
 
+        /* Variables. */
+        var that = this;
+
         /* Store JQuery object.. */
         this.tree = $(this.CONFIG.placeholder_id).length > 0 ? $(this.CONFIG.placeholder_id) : $("#" + this.CONFIG.placeholder_id);
 
         /* Fetch FAOSTAT groups and domains. */
-        this.CONFIG.api.groupsanddomains({
-
-            success: this.process_api_response,
-            context: this
-
+        this.CONFIG.api.groupsanddomains({}).then(function (json) {
+            that.process_api_response(json);
         });
 
     };
