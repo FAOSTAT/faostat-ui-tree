@@ -170,13 +170,17 @@ define(['jquery',
     TREE.prototype.selectDefaultCode = function () {
         if (this.CONFIG.code) {
             this.CONFIG.default_code = this.CONFIG.code;
-            this.tree.jstree().select_node(this.CONFIG.code);
         } else if (this.CONFIG.domain) {
             this.CONFIG.default_code = this.CONFIG.domain;
-            this.tree.jstree().select_node(this.CONFIG.domain);
         } else if (this.CONFIG.group) {
             this.CONFIG.default_code = this.CONFIG.group;
-            this.tree.jstree().select_node(this.CONFIG.group);
+        } else {
+            // TODO: no default selection
+        }
+
+        if (this.CONFIG.default_code) {
+            this.tree.jstree().select_node(this.CONFIG.default_code);
+            this.tree.jstree().open_node(this.CONFIG.default_code);
         }
     };
 
