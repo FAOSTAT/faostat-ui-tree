@@ -4,7 +4,7 @@ define(['jquery',
         'faostatapiclient',
         'q',
         'jstree',
-        'sweetAlert'], function ($, FAOSTATCommons, FAOSTATAPIClient, Q) {
+        'sweetAlert'], function ($, FAOSTATCommons, FAOSTATAPIClient) {
 
     'use strict';
 
