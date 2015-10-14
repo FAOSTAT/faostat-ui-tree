@@ -62,8 +62,12 @@ define(['jquery',
         /* Variables. */
         var that = this;
 
-        /* Store JQuery object.. */
-        this.tree = $(this.CONFIG.placeholder_id).length > 0 ? $(this.CONFIG.placeholder_id) : $("#" + this.CONFIG.placeholder_id);
+        if (this.CONFIG.placeholder_id instanceof $) {
+            this.tree = this.CONFIG.placeholder_id;
+        }else{
+            /* Store JQuery object.. */
+            this.tree = $(this.CONFIG.placeholder_id).length > 0 ? $(this.CONFIG.placeholder_id) : $("#" + this.CONFIG.placeholder_id);
+        }
 
         /* Fetch FAOSTAT groups and domains. */
         this.CONFIG.api.groupsanddomains({}).then(function (json) {
@@ -102,6 +106,10 @@ define(['jquery',
 
         }
 
+        console.log(payload);
+
+        console.log(this.tree.length);
+
         /* Init JSTree. */
         this.tree.jstree({
 
@@ -135,22 +143,24 @@ define(['jquery',
                     data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
                 }
                 if (that.CONFIG.callback.onClick) {
-                    that.CONFIG.callback.onClick({id: data.node.id});
+                    that.CONFIG.callback.onClick({id: data.node.id, label: data.node.text});
                 }
             } else {
                 if (data.node.parent === '#') {
                     data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
                     if (that.CONFIG.callback.onGroupClick) {
-                        that.CONFIG.callback.onGroupClick({id: data.node.id});
+                        that.CONFIG.callback.onGroupClick({id: data.node.id, label: data.node.text});
                     }
                 } else {
                     if (that.CONFIG.callback.onDomainClick) {
-                        that.CONFIG.callback.onDomainClick({id: data.node.id});
+                        that.CONFIG.callback.onDomainClick({id: data.node.id, label: data.node.text});
                     }
                 }
             }
 
         });
+
+        console.log("iuashdiuah");
 
         /* Show required domain. */
         this.tree.on('ready.jstree', function () {
