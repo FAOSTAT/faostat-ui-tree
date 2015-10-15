@@ -106,10 +106,6 @@ define(['jquery',
 
         }
 
-        console.log(payload);
-
-        console.log(this.tree.length);
-
         /* Init JSTree. */
         this.tree.jstree({
 
@@ -159,8 +155,6 @@ define(['jquery',
             }
 
         });
-
-        console.log("iuashdiuah");
 
         /* Show required domain. */
         this.tree.on('ready.jstree', function () {
