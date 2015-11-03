@@ -46,9 +46,6 @@ define(['jquery',
         /* Fix the language, if needed. */
         this.CONFIG.lang = this.CONFIG.lang !== null ? this.CONFIG.lang : 'en';
 
-        /* Store FAOSTAT language. */
-        this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
-
         /* Initiate FAOSTAT API's client. */
         this.CONFIG.api = new FAOSTATAPIClient();
 
@@ -70,7 +67,9 @@ define(['jquery',
         }
 
         /* Fetch FAOSTAT groups and domains. */
-        this.CONFIG.api.groupsanddomains({}).then(function (json) {
+        this.CONFIG.api.groupsanddomains({
+            lang: this.CONFIG.lang
+        }).then(function (json) {
             that.process_api_response(json);
         });
 
