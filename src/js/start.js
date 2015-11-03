@@ -18,12 +18,11 @@ define(['jquery',
             group: null,
             domain: null,
 
-            datasource: 'faostat',
+            //datasource: 'faostat',
             max_label_width: null,
             prefix: 'faostat_tree_',
             placeholder_id: 'placeholder',
-            url_rest: 'http://faostat3.fao.org/wds/rest',
-            url_wds_crud: 'http://fenixapps2.fao.org/wds_5.1/rest/crud',
+            blacklist: [],
 
             /* Events to destroy. */
             callback: {
@@ -69,9 +68,12 @@ define(['jquery',
             this.tree = $(this.CONFIG.placeholder_id).length > 0 ? $(this.CONFIG.placeholder_id) : $("#" + this.CONFIG.placeholder_id);
         }
 
+        this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
+
         /* Fetch FAOSTAT groups and domains. */
         this.CONFIG.api.groupsanddomains({
-            lang: this.CONFIG.lang
+            lang: this.CONFIG.lang,
+            datasource: this.CONFIG.datasource
         }).then(function (json) {
             that.process_api_response(json);
         });
@@ -90,21 +92,25 @@ define(['jquery',
         for (i = 0; i < json.data.length; i += 1) {
 
             /* Create group node. */
-            if ($.inArray(json.data[i].code, buffer) < 0) {
-                buffer.push(json.data[i].code);
-                payload.push({
-                    id: json.data[i].code,
-                    text: json.data[i].label,
-                    parent: '#'
-                });
-            }
+            if ($.inArray(json.data[i].code, this.CONFIG.blacklist) < 0) {
+                if ($.inArray(json.data[i].code, buffer) < 0) {
+                    buffer.push(json.data[i].code);
+                    payload.push({
+                        id: json.data[i].code,
+                        text: json.data[i].label,
+                        parent: '#'
+                    });
+                }
 
-            /* Add domain node. */
-            payload.push({
-                id: json.data[i].DomainCode,
-                text: json.data[i].DomainNameE,
-                parent: json.data[i].code
-            });
+                /* Add domain node. */
+                if ($.inArray(json.data[i].DomainCode, this.CONFIG.blacklist) < 0) {
+                    payload.push({
+                        id: json.data[i].DomainCode,
+                        text: json.data[i]['DomainName' + this.CONFIG.lang_faostat],
+                        parent: json.data[i].code
+                    });
+                }
+            }
 
         }
 
