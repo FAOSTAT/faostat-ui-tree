@@ -18,7 +18,6 @@ define(['jquery',
             group: null,
             domain: null,
 
-            lang_faostat: 'E',
             datasource: 'faostat',
             max_label_width: null,
             prefix: 'faostat_tree_',
@@ -44,6 +43,10 @@ define(['jquery',
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
 
         /* Fix the language, if needed. */
+        if (!this.CONFIG.lang) {
+            console.warn('Language for FAOSTAT-TREE is no set', this.CONFIG.lang);
+        }
+
         this.CONFIG.lang = this.CONFIG.lang !== null ? this.CONFIG.lang : 'en';
 
         /* Initiate FAOSTAT API's client. */
@@ -156,14 +159,22 @@ define(['jquery',
         });
 
         /* Show required domain. */
-        this.tree.on('ready.jstree', function () {
-
+        this.tree.on('ready.jstree', function (data) {
             /* set and select default code. */
             that.selectDefaultCode();
 
             /* Invoke onTreeRendered function. */
             if (that.CONFIG.callback.onTreeRendered) {
-                that.CONFIG.callback.onTreeRendered(that.CONFIG.default_code);
+                var node = $('#' + that.tree.jstree('get_selected'));
+                if (node) {
+                    that.CONFIG.callback.onTreeRendered(
+                        {
+                            id: node.attr('id'),
+                            label: node.text()
+                        })
+                }else{
+                    that.CONFIG.callback.onTreeRendered();
+                }
             }
 
         });
