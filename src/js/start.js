@@ -171,15 +171,14 @@ define(['jquery',
 
             /* Invoke onTreeRendered function. */
             if (that.CONFIG.callback.onTreeRendered) {
-                var node = $('#' + that.tree.jstree('get_selected'));
+                // TODO: fix workaround for default code
+                var node = that.tree.jstree().get_selected(true);
                 if (node) {
                     that.CONFIG.callback.onTreeRendered(
                         {
-                            id: node.attr('id'),
-                            label: node.text()
+                            id: node[0].id,
+                            label: node[0].text
                         })
-                }else{
-                    that.CONFIG.callback.onTreeRendered();
                 }
             }
 
