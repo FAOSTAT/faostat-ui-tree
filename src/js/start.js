@@ -206,7 +206,6 @@ define(['jquery',
     };
 
     TREE.prototype.selectDefaultCode = function () {
-        console.log(this.CONFIG);
         if (this.CONFIG.code) {
             this.CONFIG.default_code = this.CONFIG.code;
         } else if (this.CONFIG.domain) {
