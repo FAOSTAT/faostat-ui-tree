@@ -59,7 +59,7 @@ define(['jquery',
     TREE.prototype.render = function () {
 
         /* Variables. */
-        var that = this;
+        var self = this;
 
         if (this.CONFIG.placeholder_id instanceof $) {
             this.tree = this.CONFIG.placeholder_id;
@@ -70,26 +70,30 @@ define(['jquery',
 
         this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
 
-        /* Fetch FAOSTAT groups and domains. */
-        this.CONFIG.api.groupsanddomains({
-            lang: this.CONFIG.lang,
-            datasource: this.CONFIG.datasource
-        }).then(function (json) {
-            that.process_api_response(json);
-        });
+        if (this.CONFIG.custom) {
+            // create a custom tree
+            self.createTree(this.CONFIG.custom);
+        }
+        else {
+            /* Fetch FAOSTAT groups and domains. */
+            this.CONFIG.api.groupsanddomains({
+                lang: this.CONFIG.lang,
+                datasource: this.CONFIG.datasource
+            }).then(function (json) {
+                self.createTree(self.prepareAPIData(json));
+            });
+        }
 
     };
 
-    TREE.prototype.process_api_response = function (json) {
+    TREE.prototype.prepareAPIData = function (json) {
 
         /* Buffer. */
         var buffer = [],
-            payload = [],
-            i,
-            that = this;
+            payload = [];
 
         /* Iterate over domains. */
-        for (i = 0; i < json.data.length; i += 1) {
+        for (var i = 0; i < json.data.length; i++) {
 
             /* Create group node. */
             if ($.inArray(json.data[i].code, this.CONFIG.blacklist) < 0) {
@@ -114,13 +118,21 @@ define(['jquery',
 
         }
 
+        return payload;
+    };
+
+    TREE.prototype.createTree = function (data) {
+
+        var self = this;
+
+
         /* Init JSTree. */
         this.tree.jstree({
 
             plugins: ['unique', 'search', 'types', 'wholerow'],
 
             core: {
-                data: payload,
+                data: data,
                 themes: {
                     icons: false,
                     responsive: true
@@ -142,22 +154,22 @@ define(['jquery',
             var node = $('#' + data.node.id);
 
             /* Generic click listener, or specific listeners for groups and domains. */
-            if (that.CONFIG.callback.onClick) {
+            if (self.CONFIG.callback.onClick) {
                 if (data.node.parent === '#') {
-                    data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
+                    data.node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
                 }
-                if (that.CONFIG.callback.onClick) {
-                    that.CONFIG.callback.onClick({id: data.node.id, label: data.node.text});
+                if (self.CONFIG.callback.onClick) {
+                    self.CONFIG.callback.onClick({id: data.node.id, label: data.node.text});
                 }
             } else {
                 if (data.node.parent === '#') {
-                    data.node.parent === '#' && that.tree.jstree().is_open() ? that.tree.jstree().close_node(node) : that.tree.jstree().open_node(node);
-                    if (that.CONFIG.callback.onGroupClick) {
-                        that.CONFIG.callback.onGroupClick({id: data.node.id, label: data.node.text});
+                    data.node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
+                    if (self.CONFIG.callback.onGroupClick) {
+                        self.CONFIG.callback.onGroupClick({id: data.node.id, label: data.node.text});
                     }
                 } else {
-                    if (that.CONFIG.callback.onDomainClick) {
-                        that.CONFIG.callback.onDomainClick({id: data.node.id, label: data.node.text});
+                    if (self.CONFIG.callback.onDomainClick) {
+                        self.CONFIG.callback.onDomainClick({id: data.node.id, label: data.node.text});
                     }
                 }
             }
@@ -167,14 +179,14 @@ define(['jquery',
         /* Show required domain. */
         this.tree.on('ready.jstree', function (data) {
             /* set and select default code. */
-            that.selectDefaultCode();
+            self.selectDefaultCode();
 
             /* Invoke onTreeRendered function. */
-            if (that.CONFIG.callback.onTreeRendered) {
+            if (self.CONFIG.callback.onTreeRendered) {
                 // TODO: fix workaround for default code
-                var node = that.tree.jstree().get_selected(true);
+                var node = self.tree.jstree().get_selected(true);
                 if (node) {
-                    that.CONFIG.callback.onTreeRendered(
+                    self.CONFIG.callback.onTreeRendered(
                         {
                             id: node[0].id,
                             label: node[0].text
