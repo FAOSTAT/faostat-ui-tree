@@ -125,7 +125,6 @@ define(['jquery',
 
         var self = this;
 
-
         /* Init JSTree. */
         this.tree.jstree({
 
@@ -181,11 +180,19 @@ define(['jquery',
             /* set and select default code. */
             self.selectDefaultCode();
 
+            // options
+            if (self.CONFIG.options) {
+                if (self.CONFIG.options.open_all) {
+                    // open all tree nodes
+                    self.tree.jstree("open_all");
+                }
+            }
+
             /* Invoke onTreeRendered function. */
             if (self.CONFIG.callback.onTreeRendered) {
                 // TODO: fix workaround for default code
                 var node = self.tree.jstree().get_selected(true);
-                if (node) {
+                if (node !== undefined && node.length > 0) {
                     self.CONFIG.callback.onTreeRendered(
                         {
                             id: node[0].id,
@@ -199,6 +206,7 @@ define(['jquery',
     };
 
     TREE.prototype.selectDefaultCode = function () {
+        console.log(this.CONFIG);
         if (this.CONFIG.code) {
             this.CONFIG.default_code = this.CONFIG.code;
         } else if (this.CONFIG.domain) {
