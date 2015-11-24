@@ -1,10 +1,12 @@
 /*global define*/
 define(['jquery',
-        'faostat_commons',
-        'faostatapiclient',
-        'q',
-        'jstree',
-        'sweetAlert'], function ($, FAOSTATCommons, FAOSTATAPIClient) {
+    'loglevel',
+    'underscore',
+    'faostatapiclient',
+    'faostat_commons',
+    'jstree',
+    'bootstrap-treeview'
+], function ($, log, _, FAOSTATAPIClient, FAOSTATCommons) {
 
     'use strict';
 
@@ -70,6 +72,9 @@ define(['jquery',
 
         this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
 
+        // legacy
+        this.selectDefaultCode();
+
         if (this.CONFIG.custom) {
             // create a custom tree
             self.createTree(this.CONFIG.custom);
@@ -84,39 +89,50 @@ define(['jquery',
             });
         }
 
+
     };
 
     TREE.prototype.prepareAPIData = function (json) {
 
         /* Buffer. */
         var buffer = [],
-            payload = [];
+            payload = [],
+            data = json.data,
+            self = this;
 
-        /* Iterate over domains. */
-        for (var i = 0; i < json.data.length; i++) {
+        _.each(data, function(d) {
+            //log.info(d);
 
-            /* Create group node. */
-            if ($.inArray(json.data[i].code, this.CONFIG.blacklist) < 0) {
-                if ($.inArray(json.data[i].code, buffer) < 0) {
-                    buffer.push(json.data[i].code);
+            if ($.inArray(d.code, self.CONFIG.blacklist) < 0) {
+
+                if ($.inArray(d.code, buffer) < 0) {
+                    buffer.push(d.code);
                     payload.push({
-                        id: json.data[i].code,
-                        text: json.data[i].label,
-                        parent: '#'
+                        id: d.code,
+                        text: d.label,
+                        nodes: [],
+                        state: {
+                            expanded: (d.code === self.CONFIG.default_code) || (d.DomainCode === self.CONFIG.default_code),
+                            selected: (d.code === self.CONFIG.default_code)
+                        }
                     });
                 }
 
                 /* Add domain node. */
-                if ($.inArray(json.data[i].DomainCode, this.CONFIG.blacklist) < 0) {
-                    payload.push({
-                        id: json.data[i].DomainCode,
-                        text: json.data[i]['DomainName' + this.CONFIG.lang_faostat],
-                        parent: json.data[i].code
+                if ($.inArray(d.DomainCode, self.CONFIG.blacklist) < 0) {
+                    var c = _.findWhere(payload, {id: d.code});
+                    c.nodes.push({
+                        id: d.DomainCode,
+                        text: d['DomainName' + self.CONFIG.lang_faostat],
+                        state: {
+                            expanded: (d.DomainCode === self.CONFIG.default_code),
+                            selected: (d.DomainCode === self.CONFIG.default_code)
+                        }
                     });
                 }
             }
 
-        }
+        });
 
         return payload;
     };
@@ -125,79 +141,51 @@ define(['jquery',
 
         var self = this;
 
-        /* Init JSTree. */
-        this.tree.jstree({
+        this.tree.treeview({data: data});
+        //this.tree.treeview('collapseAll', { silent: true });
 
-            plugins: ['unique', 'search', 'types', 'wholerow'],
+/*        this.tree.treeview('search', [ 'Parent', {
+            ignoreCase: true,     // case insensitive
+            exactMatch: false,    // like or equals
+            revealResults: true,  // reveal matching nodes
+        }]);*/
 
-            core: {
-                data: data,
-                themes: {
-                    icons: false,
-                    responsive: true
-                }
-            },
 
-            search: {
-                show_only_matches: true,
-                close_opened_onclear: false
+        if (typeof this.CONFIG.callback.onTreeRendered === 'function') {
+            log.info(this.CONFIG.callback.onTreeRendered)
+            // TODO: fix workaround for default code
+            var node = this.tree.treeview('getSelected');
+            if (node !== undefined && node.length > 0) {
+                this.CONFIG.callback.onTreeRendered(
+                    {
+                        id: node[0].id,
+                        label: node[0].text
+                    })
             }
+        }
 
-        });
 
-        /* Implement node selection. */
-        this.tree.on('activate_node.jstree', function (e, data) {
+        // bindings
 
-            /* Fetch node. */
-            // TODO: improve this. the ID is the domain/group code
-            var node = $('#' + data.node.id);
+        this.tree.on('nodeSelected', function(event, data) {
+
+            log.info(event)
+            log.info(data)
 
             /* Generic click listener, or specific listeners for groups and domains. */
             if (self.CONFIG.callback.onClick) {
-                if (data.node.parent === '#') {
-                    data.node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
-                }
                 if (self.CONFIG.callback.onClick) {
-                    self.CONFIG.callback.onClick({id: data.node.id, label: data.node.text});
+                    self.CONFIG.callback.onClick({id: data.id, label: data.text});
                 }
             } else {
-                if (data.node.parent === '#') {
-                    data.node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
+                if (data.nodes) {
                     if (self.CONFIG.callback.onGroupClick) {
-                        self.CONFIG.callback.onGroupClick({id: data.node.id, label: data.node.text});
+                        self.CONFIG.callback.onGroupClick({id: data.id, label: data.text});
                     }
                 } else {
                     if (self.CONFIG.callback.onDomainClick) {
-                        self.CONFIG.callback.onDomainClick({id: data.node.id, label: data.node.text});
+                        self.CONFIG.callback.onDomainClick({id: data.id, label: data.text});
                     }
-                }
-            }
-
-        });
-
-        /* Show required domain. */
-        this.tree.on('ready.jstree', function (data) {
-            /* set and select default code. */
-            self.selectDefaultCode();
-
-            // options
-            if (self.CONFIG.options) {
-                if (self.CONFIG.options.open_all) {
-                    // open all tree nodes
-                    self.tree.jstree("open_all");
-                }
-            }
-
-            /* Invoke onTreeRendered function. */
-            if (self.CONFIG.callback.onTreeRendered) {
-                // TODO: fix workaround for default code
-                var node = self.tree.jstree().get_selected(true);
-                if (node !== undefined && node.length > 0) {
-                    self.CONFIG.callback.onTreeRendered(
-                        {
-                            id: node[0].id,
-                            label: node[0].text
-                        })
                 }
             }
 
@@ -216,15 +204,11 @@ define(['jquery',
             // TODO: no default selection
         }
 
-        if (this.CONFIG.default_code) {
-            this.tree.jstree().select_node(this.CONFIG.default_code);
-            this.tree.jstree().open_node(this.CONFIG.default_code);
-        }
     };
 
     TREE.prototype.getCodeType = function () {
-        var node = $('#' + this.tree.jstree('get_selected'));
-        return this.tree.jstree().is_leaf(node) ? 'domain' : 'group';
+        var node = this.tree.treeview('getSelected')[0];
+        return (node.nodes)? 'group' : 'domain';
     };
 
     TREE.prototype.destroy = function () {
