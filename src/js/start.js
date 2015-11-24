@@ -25,6 +25,7 @@ define(['jquery',
             prefix: 'faostat_tree_',
             placeholder_id: 'placeholder',
             blacklist: [],
+            whitelist: [],
 
             /* Events to destroy. */
             callback: {
@@ -103,23 +104,25 @@ define(['jquery',
         _.each(data, function(d) {
             //log.info(d);
 
-            if ($.inArray(d.code, self.CONFIG.blacklist) < 0) {
-
-                if ($.inArray(d.code, buffer) < 0) {
-                    buffer.push(d.code);
-                    payload.push({
-                        id: d.code,
-                        text: d.label,
-                        nodes: [],
-                        state: {
-                            expanded: (d.code === self.CONFIG.default_code) || (d.DomainCode === self.CONFIG.default_code),
-                            selected: (d.code === self.CONFIG.default_code)
-                        }
-                    });
+            // TODO: remove it! temporary whitelist filter
+            if (self.CONFIG.whitelist.length > 0) {
+                if( $.inArray(d.code, self.CONFIG.whitelist) >= 0) {
+                    if ($.inArray(d.code, buffer) < 0) {
+                        buffer.push(d.code);
+                        payload.push({
+                            id: d.code,
+                            text: d.label,
+                            nodes: [],
+                            state: {
+                                expanded: (d.code === self.CONFIG.default_code) || (d.DomainCode === self.CONFIG.default_code),
+                                selected: (d.code === self.CONFIG.default_code)
+                            }
+                        });
+                    }
                 }
 
                 /* Add domain node. */
-                if ($.inArray(d.DomainCode, self.CONFIG.blacklist) < 0) {
+                if ($.inArray(d.DomainCode, self.CONFIG.whitelist) >= 0) {
                     var c = _.findWhere(payload, {id: d.code});
                     c.nodes.push({
                         id: d.DomainCode,
@@ -132,7 +135,41 @@ define(['jquery',
                 }
             }
 
+            // use the blacklist
+            else {
+                if ($.inArray(d.code, self.CONFIG.blacklist) < 0) {
+
+                    if ($.inArray(d.code, buffer) < 0) {
+                        buffer.push(d.code);
+                        payload.push({
+                            id: d.code,
+                            text: d.label,
+                            nodes: [],
+                            state: {
+                                expanded: (d.code === self.CONFIG.default_code) || (d.DomainCode === self.CONFIG.default_code),
+                                selected: (d.code === self.CONFIG.default_code)
+                            }
+                        });
+                    }
+
+                    /* Add domain node. */
+                    if ($.inArray(d.DomainCode, self.CONFIG.blacklist) < 0) {
+                        var c = _.findWhere(payload, {id: d.code});
+                        c.nodes.push({
+                            id: d.DomainCode,
+                            text: d['DomainName' + self.CONFIG.lang_faostat],
+                            state: {
+                                expanded: (d.DomainCode === self.CONFIG.default_code),
+                                selected: (d.DomainCode === self.CONFIG.default_code)
+                            }
+                        });
+                    }
+                }
+            }
+
         });
+
+        log.info(payload)
 
         return payload;
     };
@@ -144,11 +181,11 @@ define(['jquery',
         this.tree.treeview({data: data});
         //this.tree.treeview('collapseAll', { silent: true });
 
-/*        this.tree.treeview('search', [ 'Parent', {
-            ignoreCase: true,     // case insensitive
-            exactMatch: false,    // like or equals
-            revealResults: true,  // reveal matching nodes
-        }]);*/
+        /*        this.tree.treeview('search', [ 'Parent', {
+         ignoreCase: true,     // case insensitive
+         exactMatch: false,    // like or equals
+         revealResults: true,  // reveal matching nodes
+         }]);*/
 
 
         if (typeof this.CONFIG.callback.onTreeRendered === 'function') {
@@ -166,8 +203,8 @@ define(['jquery',
         // selection binding
         this.tree.on('nodeSelected', function(event, data) {
 
-           // expand node on selection
-           self.tree.treeview('expandNode', data.nodeId);
+            // expand node on selection
+            self.tree.treeview('expandNode', data.nodeId);
 
             /* Generic click listener, or specific listeners for groups and domains. */
             if (self.CONFIG.callback.onClick) {
