@@ -152,8 +152,6 @@ define(['jquery',
 
 
         if (typeof this.CONFIG.callback.onTreeRendered === 'function') {
-            log.info(this.CONFIG.callback.onTreeRendered)
-            // TODO: fix workaround for default code
             var node = this.tree.treeview('getSelected');
             if (node !== undefined && node.length > 0) {
                 this.CONFIG.callback.onTreeRendered(
@@ -165,12 +163,11 @@ define(['jquery',
         }
 
 
-        // bindings
-
+        // selection binding
         this.tree.on('nodeSelected', function(event, data) {
 
-            log.info(event)
-            log.info(data)
+           // expand node on selection
+           self.tree.treeview('expandNode', data.nodeId);
 
             /* Generic click listener, or specific listeners for groups and domains. */
             if (self.CONFIG.callback.onClick) {
