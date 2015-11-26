@@ -184,6 +184,7 @@ define(['jquery',
             expandIcon: 'glyphicon glyphicon-chevron-right',
             collapseIcon: 'glyphicon glyphicon-chevron-down'
         });
+
         //this.tree.treeview('collapseAll', { silent: true });
 
         /*        this.tree.treeview('search', [ 'Parent', {
@@ -203,7 +204,6 @@ define(['jquery',
                     })
             }
         }
-
 
         // selection binding
         this.tree.on('nodeSelected', function(event, data) {
@@ -251,7 +251,11 @@ define(['jquery',
     };
 
     TREE.prototype.destroy = function () {
-        this.tree.jstree("destroy");
+       // this.tree.jstree("destroy");
+    };
+
+    TREE.prototype.dispose = function () {
+        // this.tree.jstree("destroy");
     };
 
     return TREE;
