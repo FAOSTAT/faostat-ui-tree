@@ -228,7 +228,11 @@ define(['jquery',
     };
 
     TREE.prototype.destroy = function () {
-        this.tree.jstree("destroy");
+        this.tree.jstree('destroy');
+    };
+
+    TREE.prototype.dispose = function () {
+        this.destroy();
     };
 
     return TREE;
