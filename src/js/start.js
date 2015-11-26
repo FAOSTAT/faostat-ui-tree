@@ -179,6 +179,7 @@ define(['jquery',
         var self = this;
 
         this.tree.treeview({
+            showBorder: false,
             data: data,
             expandIcon: 'glyphicon glyphicon-chevron-right',
             collapseIcon: 'glyphicon glyphicon-chevron-down'
