@@ -169,7 +169,6 @@ define(['jquery',
 
         });
 
-        log.info(payload)
 
         return payload;
     };
