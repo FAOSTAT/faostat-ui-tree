@@ -118,6 +118,15 @@ define(['jquery',
                                 selected: (d.code === self.CONFIG.default_code)
                             }
                         });
+                    }else{
+                        // TODO: do it better
+                        _.each(payload, function(p) {
+                            if(p.id === d.code) {
+                                if (p.state.expanded === false) {
+                                    p.state.expanded = (d.DomainCode === self.CONFIG.default_code);
+                                }
+                            }
+                        });
                     }
                 }
 
@@ -150,6 +159,15 @@ define(['jquery',
                                 selected: (d.code === self.CONFIG.default_code)
                             }
                         });
+                    }else{
+                        // TODO: do it better
+                        _.each(payload, function(p) {
+                            if(p.id === d.code) {
+                                if (p.state.expanded === false) {
+                                    p.state.expanded = (d.DomainCode === self.CONFIG.default_code);
+                                }
+                            }
+                        });
                     }
 
                     /* Add domain node. */
@@ -168,6 +186,9 @@ define(['jquery',
             }
 
         });
+
+        log.info(payload)
+        log.info(this.CONFIG.default_code)
 
 
         return payload;
