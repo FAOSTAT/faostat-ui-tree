@@ -187,8 +187,8 @@ define(['jquery',
 
         });
 
-        log.info(payload)
-        log.info(this.CONFIG.default_code)
+        //log.info(payload)
+        //log.info(this.CONFIG.default_code)
 
 
         return payload;
