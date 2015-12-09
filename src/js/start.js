@@ -24,6 +24,8 @@ define(['jquery',
             placeholder_id: 'placeholder',
             blacklist: [],
 
+            placeholder_search: null,
+
             /* Events to destroy. */
             callback: {
                 onClick: null,
@@ -197,11 +199,24 @@ define(['jquery',
                         {
                             id: node[0].id,
                             label: node[0].text
-                        })
+                        });
                 }
             }
 
         });
+
+
+        // added search
+        if ( this.CONFIG.placeholder_search !== null) {
+            this.$search = $(this.CONFIG.placeholder_search).length > 0 ? $(this.CONFIG.placeholder_search) : $("#" + this.CONFIG.placeholder_search)
+
+            this.$search.keyup(function (e) {
+                setTimeout(function () {
+                    self.tree.jstree(true).search(self.$search.val());
+                }, 250);
+            });
+
+        }
 
     };
 
