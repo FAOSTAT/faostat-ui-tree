@@ -1,10 +1,10 @@
 /*global define*/
 define(['jquery',
+        'loglevel',
         'faostat_commons',
         'faostatapiclient',
         'q',
-        'jstree',
-        'sweetAlert'], function ($, FAOSTATCommons, FAOSTATAPIClient) {
+        'jstree'], function ($, log, FAOSTATCommons, FAOSTATAPIClient) {
 
     'use strict';
 
@@ -23,6 +23,7 @@ define(['jquery',
             prefix: 'faostat_tree_',
             placeholder_id: 'placeholder',
             blacklist: [],
+            whitelist: [],
 
             placeholder_search: null,
 
@@ -90,13 +91,62 @@ define(['jquery',
 
     TREE.prototype.prepareAPIData = function (json) {
 
+        var payload = [];
+
+        if (this.CONFIG.whitelist.length > 0) {
+            payload = this.filterDataWhitelist(json);
+        }
+        else {
+            payload = this.filterData(json);
+        }
+
+        return payload;
+    };
+
+    TREE.prototype.filterDataWhitelist = function (json) {
+
+        log.info(json)
+        log.info(this.CONFIG.whitelist)
+
         /* Buffer. */
         var buffer = [],
             payload = [];
 
-        /* Iterate over domains. */
         for (var i = 0; i < json.data.length; i++) {
 
+            /* Create group node. */
+            if ($.inArray(json.data[i].code, this.CONFIG.whitelist) >= 0) {
+                if ($.inArray(json.data[i].code, buffer) < 0) {
+                    buffer.push(json.data[i].code);
+                    payload.push({
+                        id: json.data[i].code,
+                        text: json.data[i].label,
+                        parent: '#'
+                    });
+                }
+
+                /* Add domain node. */
+                if ($.inArray(json.data[i].DomainCode, this.CONFIG.whitelist) >= 0) {
+                    payload.push({
+                        id: json.data[i].DomainCode,
+                        text: json.data[i]['DomainName' + this.CONFIG.lang_faostat],
+                        parent: json.data[i].code
+                    });
+                }
+            }
+        }
+
+        return payload;
+
+    };
+
+    TREE.prototype.filterData = function (json) {
+
+        /* Buffer. */
+        var buffer = [],
+            payload = [];
+
+        for (var i = 0; i < json.data.length; i++) {
             /* Create group node. */
             if ($.inArray(json.data[i].code, this.CONFIG.blacklist) < 0) {
                 if ($.inArray(json.data[i].code, buffer) < 0) {
@@ -117,11 +167,11 @@ define(['jquery',
                     });
                 }
             }
-
         }
 
         return payload;
-    };
+
+    },
 
     TREE.prototype.createTree = function (data) {
 
