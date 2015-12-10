@@ -254,8 +254,7 @@ define(['jquery',
             }
 
         });
-
-
+        
         // added search
         if ( this.CONFIG.placeholder_search !== null) {
             this.$search = $(this.CONFIG.placeholder_search).length > 0 ? $(this.CONFIG.placeholder_search) : $("#" + this.CONFIG.placeholder_search)
