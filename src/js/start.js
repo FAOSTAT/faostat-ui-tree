@@ -71,6 +71,9 @@ define(['jquery',
             this.tree = $(this.CONFIG.placeholder_id).length > 0 ? $(this.CONFIG.placeholder_id) : $("#" + this.CONFIG.placeholder_id);
         }
 
+        // add tree class
+        this.tree.addClass('fs-tree');
+
         this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
 
         if (this.CONFIG.custom) {
