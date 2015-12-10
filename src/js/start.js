@@ -186,7 +186,7 @@ define(['jquery',
                 data: data,
                 themes: {
                     icons: false,
-                    responsive: true
+                    responsive: false
                 }
             },
 
