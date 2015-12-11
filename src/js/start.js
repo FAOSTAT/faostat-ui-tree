@@ -108,9 +108,6 @@ define(['jquery',
 
     TREE.prototype.filterDataWhitelist = function (json) {
 
-        log.info(json)
-        log.info(this.CONFIG.whitelist)
-
         /* Buffer. */
         var buffer = [],
             payload = [];
