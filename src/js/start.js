@@ -281,8 +281,10 @@ define(['jquery',
         }
 
         if (this.CONFIG.default_code) {
-            this.tree.jstree().select_node(this.CONFIG.default_code);
-            this.tree.jstree().open_node(this.CONFIG.default_code);
+            if ( this.tree ) {
+                this.tree.jstree().select_node(this.CONFIG.default_code);
+                this.tree.jstree().open_node(this.CONFIG.default_code);
+            }
         }
     };
 
