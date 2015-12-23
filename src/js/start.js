@@ -200,6 +200,8 @@ define(['jquery',
         /* Implement node selection. */
         this.tree.on('activate_node.jstree', function (e, data) {
 
+            log.info('activate_node.jstree')
+
             /* Fetch node. */
             // TODO: improve this. the ID is the domain/group code
             var node = $('#' + data.node.id);
@@ -229,6 +231,9 @@ define(['jquery',
 
         /* Show required domain. */
         this.tree.on('ready.jstree', function (data) {
+
+            log.info('ready.jstree')
+
             /* set and select default code. */
             self.selectDefaultCode();
 
@@ -242,6 +247,7 @@ define(['jquery',
 
             /* Invoke onTreeRendered function. */
             if (self.CONFIG.callback.onTreeRendered) {
+
                 // TODO: fix workaround for default code
                 var node = self.tree.jstree().get_selected(true);
                 if (node !== undefined && node.length > 0) {
@@ -280,10 +286,18 @@ define(['jquery',
             // TODO: no default selection
         }
 
+
+        log.info(this.CONFIG.code, this.CONFIG.default_code, this.tree.jstree())
+
         if (this.CONFIG.default_code) {
-            if ( this.tree ) {
-                this.tree.jstree().select_node(this.CONFIG.default_code);
-                this.tree.jstree().open_node(this.CONFIG.default_code);
+            if ( this.tree) {
+                log.info(this.CONFIG.default_code)
+                try {
+                    this.tree.jstree().select_node(this.CONFIG.default_code);
+                    this.tree.jstree().open_node(this.CONFIG.default_code);
+                }catch(e) {
+                    log.error(e);
+                }
             }
         }
     };
