@@ -200,7 +200,7 @@ define(['jquery',
         /* Implement node selection. */
         this.tree.on('activate_node.jstree', function (e, data) {
 
-            log.info('activate_node.jstree')
+            //log.info('activate_node.jstree')
 
             /* Fetch node. */
             // TODO: improve this. the ID is the domain/group code
@@ -232,7 +232,7 @@ define(['jquery',
         /* Show required domain. */
         this.tree.on('ready.jstree', function (data) {
 
-            log.info('ready.jstree')
+            //log.info('ready.jstree')
 
             /* set and select default code. */
             self.selectDefaultCode();
@@ -287,11 +287,11 @@ define(['jquery',
         }
 
 
-        log.info(this.CONFIG.code, this.CONFIG.default_code, this.tree.jstree())
+        //log.info(this.CONFIG.code, this.CONFIG.default_code, this.tree.jstree())
 
         if (this.CONFIG.default_code) {
             if ( this.tree) {
-                log.info(this.CONFIG.default_code)
+                //log.info(this.CONFIG.default_code)
                 try {
                     this.tree.jstree().select_node(this.CONFIG.default_code);
                     this.tree.jstree().open_node(this.CONFIG.default_code);
