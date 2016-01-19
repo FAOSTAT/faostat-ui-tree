@@ -24,6 +24,7 @@ define(['jquery',
             placeholder_id: 'placeholder',
             blacklist: [],
             whitelist: [],
+            section: 'download',
 
             placeholder_search: null,
 
@@ -82,9 +83,10 @@ define(['jquery',
         }
         else {
             /* Fetch FAOSTAT groups and domains. */
-            this.CONFIG.api.groupsanddomains({
+            this.CONFIG.api.domainstree({
                 lang: this.CONFIG.lang,
-                datasource: this.CONFIG.datasource
+                datasource: this.CONFIG.datasource,
+                section: this.CONFIG.section
             }).then(function (json) {
                 self.createTree(self.prepareAPIData(json));
             });
@@ -103,6 +105,9 @@ define(['jquery',
             payload = this.filterData(json);
         }
 
+        log.info(json)
+        log.info(payload)
+
         return payload;
     };
 
@@ -115,12 +120,12 @@ define(['jquery',
         for (var i = 0; i < json.data.length; i++) {
 
             /* Create group node. */
-            if ($.inArray(json.data[i].code, this.CONFIG.whitelist) >= 0) {
-                if ($.inArray(json.data[i].code, buffer) < 0) {
-                    buffer.push(json.data[i].code);
+            if ($.inArray(json.data[i].GroupCode, this.CONFIG.whitelist) >= 0) {
+                if ($.inArray(json.data[i].GroupCode, buffer) < 0) {
+                    buffer.push(json.data[i].GroupCode);
                     payload.push({
-                        id: json.data[i].code,
-                        text: json.data[i].label,
+                        id: json.data[i].GroupCode,
+                        text: json.data[i].GroupName,
                         parent: '#'
                     });
                 }
@@ -129,8 +134,8 @@ define(['jquery',
                 if ($.inArray(json.data[i].DomainCode, this.CONFIG.whitelist) >= 0) {
                     payload.push({
                         id: json.data[i].DomainCode,
-                        text: json.data[i]['DomainName' + this.CONFIG.lang_faostat],
-                        parent: json.data[i].code
+                        text: json.data[i].DomainName,
+                        parent: json.data[i].GroupCode
                     });
                 }
             }
@@ -148,12 +153,12 @@ define(['jquery',
 
         for (var i = 0; i < json.data.length; i++) {
             /* Create group node. */
-            if ($.inArray(json.data[i].code, this.CONFIG.blacklist) < 0) {
-                if ($.inArray(json.data[i].code, buffer) < 0) {
-                    buffer.push(json.data[i].code);
+            if ($.inArray(json.data[i].GroupCode, this.CONFIG.blacklist) < 0) {
+                if ($.inArray(json.data[i].GroupCode, buffer) < 0) {
+                    buffer.push(json.data[i].GroupCode);
                     payload.push({
-                        id: json.data[i].code,
-                        text: json.data[i].label,
+                        id: json.data[i].GroupCode,
+                        text: json.data[i].GroupName,
                         parent: '#'
                     });
                 }
@@ -162,8 +167,8 @@ define(['jquery',
                 if ($.inArray(json.data[i].DomainCode, this.CONFIG.blacklist) < 0) {
                     payload.push({
                         id: json.data[i].DomainCode,
-                        text: json.data[i]['DomainName' + this.CONFIG.lang_faostat],
-                        parent: json.data[i].code
+                        text: json.data[i].DomainName,
+                        parent: json.data[i].GroupCode
                     });
                 }
             }
