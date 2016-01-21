@@ -105,9 +105,6 @@ define(['jquery',
             payload = this.filterData(json);
         }
 
-        log.info(json)
-        log.info(payload)
-
         return payload;
     };
 
