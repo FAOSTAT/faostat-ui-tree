@@ -4,7 +4,9 @@ define(['jquery',
         'faostat_commons',
         'faostatapiclient',
         'q',
-        'jstree'], function ($, log, FAOSTATCommons, FAOSTATAPIClient) {
+        'jstree',
+        'amplify'
+], function ($, log, FAOSTATCommons, FAOSTATAPIClient) {
 
     'use strict';
 
