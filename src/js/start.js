@@ -125,6 +125,11 @@ define(['jquery',
                     payload.push({
                         id: json.data[i].GroupCode,
                         text: json.data[i].GroupName,
+                        li_attr: {
+                            id: json.data[i].GroupCode,
+                            label: json.data[i].GroupName,
+                            dateUpdate: json.data[i].DateUpdate
+                        },
                         parent: '#'
                     });
                 }
@@ -134,6 +139,11 @@ define(['jquery',
                     payload.push({
                         id: json.data[i].DomainCode,
                         text: json.data[i].DomainName,
+                        li_attr: {
+                            id: json.data[i].DomainCode,
+                            label: json.data[i].DomainName,
+                            dateUpdate: json.data[i].DateUpdate
+                        },
                         parent: json.data[i].GroupCode
                     });
                 }
@@ -158,6 +168,11 @@ define(['jquery',
                     payload.push({
                         id: json.data[i].GroupCode,
                         text: json.data[i].GroupName,
+                        li_attr: {
+                          id: json.data[i].GroupCode,
+                          label: json.data[i].GroupName,
+                          dateUpdate: json.data[i].DateUpdate
+                        },
                         parent: '#'
                     });
                 }
@@ -167,6 +182,11 @@ define(['jquery',
                     payload.push({
                         id: json.data[i].DomainCode,
                         text: json.data[i].DomainName,
+                        li_attr: {
+                            id: json.data[i].DomainCode,
+                            label: json.data[i].DomainName,
+                            dateUpdate: json.data[i].DateUpdate
+                        },
                         parent: json.data[i].GroupCode
                     });
                 }
@@ -207,26 +227,26 @@ define(['jquery',
             //log.info('activate_node.jstree')
 
             /* Fetch node. */
-            // TODO: improve this. the ID is the domain/group code
-            var node = $('#' + data.node.id);
+            var node = data.node;
+
 
             /* Generic click listener, or specific listeners for groups and domains. */
             if (self.CONFIG.callback.onClick) {
-                if (data.node.parent === '#') {
-                    data.node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
+                if (node.parent === '#') {
+                    node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
                 }
                 if (self.CONFIG.callback.onClick) {
-                    self.CONFIG.callback.onClick({id: data.node.id, label: data.node.text});
+                    self.CONFIG.callback.onClick(self.getNodeAttributes(node));
                 }
             } else {
-                if (data.node.parent === '#') {
-                    data.node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
+                if (node.parent === '#') {
+                    node.parent === '#' && self.tree.jstree().is_open() ? self.tree.jstree().close_node(node) : self.tree.jstree().open_node(node);
                     if (self.CONFIG.callback.onGroupClick) {
-                        self.CONFIG.callback.onGroupClick({id: data.node.id, label: data.node.text});
+                        self.CONFIG.callback.onGroupClick(self.getNodeAttributes(node));
                     }
                 } else {
                     if (self.CONFIG.callback.onDomainClick) {
-                        self.CONFIG.callback.onDomainClick({id: data.node.id, label: data.node.text});
+                        self.CONFIG.callback.onDomainClick(self.getNodeAttributes(node));
                     }
                 }
             }
@@ -237,6 +257,8 @@ define(['jquery',
         this.tree.on('ready.jstree', function (data) {
 
             //log.info('ready.jstree')
+
+            log.info(data);
 
             /* set and select default code. */
             self.selectDefaultCode();
@@ -254,12 +276,10 @@ define(['jquery',
 
                 // TODO: fix workaround for default code
                 var node = self.tree.jstree().get_selected(true);
+
+                log.info(node)
                 if (node !== undefined && node.length > 0) {
-                    self.CONFIG.callback.onTreeRendered(
-                        {
-                            id: node[0].id,
-                            label: node[0].text
-                        });
+                    self.CONFIG.callback.onTreeRendered(self.getNodeAttributes(node[0]));
                 }
             }
 
@@ -304,6 +324,21 @@ define(['jquery',
                 }
             }
         }
+    };
+
+    TREE.prototype.getNodeAttributes = function (node) {
+
+        // overriding the node attributes to in case add the label and/or text attributes on return
+        if (!node.li_attr.hasOwnProperty('label')) {
+            node.li_attr.label = node.text;
+        }
+
+        if (!node.li_attr.hasOwnProperty('text')) {
+            node.li_attr.text = node.text;
+        }
+
+        return node.li_attr;
+
     };
 
     TREE.prototype.getCodeType = function () {
