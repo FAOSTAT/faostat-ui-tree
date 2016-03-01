@@ -85,7 +85,7 @@ define(['jquery',
         }
         else {
             /* Fetch FAOSTAT groups and domains. */
-            this.CONFIG.api.domainstree({
+            this.CONFIG.api.groupsanddomains({
                 lang: this.CONFIG.lang,
                 datasource: this.CONFIG.datasource,
                 section: this.CONFIG.section
@@ -119,32 +119,32 @@ define(['jquery',
         for (var i = 0; i < json.data.length; i++) {
 
             /* Create group node. */
-            if ($.inArray(json.data[i].GroupCode, this.CONFIG.whitelist) >= 0) {
-                if ($.inArray(json.data[i].GroupCode, buffer) < 0) {
-                    buffer.push(json.data[i].GroupCode);
+            if ($.inArray(json.data[i].group_code, this.CONFIG.whitelist) >= 0) {
+                if ($.inArray(json.data[i].group_code, buffer) < 0) {
+                    buffer.push(json.data[i].group_code);
                     payload.push({
-                        id: json.data[i].GroupCode,
-                        text: json.data[i].GroupName,
+                        id: json.data[i].group_code,
+                        text: json.data[i].group_name,
                         li_attr: {
-                            id: json.data[i].GroupCode,
-                            label: json.data[i].GroupName,
-                            dateUpdate: json.data[i].DateUpdate
+                            id: json.data[i].group_code,
+                            label: json.data[i].group_name,
+                            date_update: json.data[i].date_update
                         },
                         parent: '#'
                     });
                 }
 
                 /* Add domain node. */
-                if ($.inArray(json.data[i].DomainCode, this.CONFIG.whitelist) >= 0) {
+                if ($.inArray(json.data[i].domain_code, this.CONFIG.whitelist) >= 0) {
                     payload.push({
-                        id: json.data[i].DomainCode,
-                        text: json.data[i].DomainName,
+                        id: json.data[i].domain_code,
+                        text: json.data[i].domain_name,
                         li_attr: {
-                            id: json.data[i].DomainCode,
-                            label: json.data[i].DomainName,
-                            dateUpdate: json.data[i].DateUpdate
+                            id: json.data[i].domain_code,
+                            label: json.data[i].domain_name,
+                            date_update: json.data[i].date_update
                         },
-                        parent: json.data[i].GroupCode
+                        parent: json.data[i].group_code
                     });
                 }
             }
@@ -162,32 +162,32 @@ define(['jquery',
 
         for (var i = 0; i < json.data.length; i++) {
             /* Create group node. */
-            if ($.inArray(json.data[i].GroupCode, this.CONFIG.blacklist) < 0) {
-                if ($.inArray(json.data[i].GroupCode, buffer) < 0) {
-                    buffer.push(json.data[i].GroupCode);
+            if ($.inArray(json.data[i].group_code, this.CONFIG.blacklist) < 0) {
+                if ($.inArray(json.data[i].group_code, buffer) < 0) {
+                    buffer.push(json.data[i].group_code);
                     payload.push({
-                        id: json.data[i].GroupCode,
-                        text: json.data[i].GroupName,
+                        id: json.data[i].group_code,
+                        text: json.data[i].group_name,
                         li_attr: {
-                          id: json.data[i].GroupCode,
-                          label: json.data[i].GroupName,
-                          dateUpdate: json.data[i].DateUpdate
+                          id: json.data[i].group_code,
+                          label: json.data[i].group_name,
+                          date_update: json.data[i].date_update
                         },
                         parent: '#'
                     });
                 }
 
                 /* Add domain node. */
-                if ($.inArray(json.data[i].DomainCode, this.CONFIG.blacklist) < 0) {
+                if ($.inArray(json.data[i].domain_code, this.CONFIG.blacklist) < 0) {
                     payload.push({
-                        id: json.data[i].DomainCode,
-                        text: json.data[i].DomainName,
+                        id: json.data[i].domain_code,
+                        text: json.data[i].domain_name,
                         li_attr: {
-                            id: json.data[i].DomainCode,
-                            label: json.data[i].DomainName,
-                            dateUpdate: json.data[i].DateUpdate
+                            id: json.data[i].domain_code,
+                            label: json.data[i].domain_name,
+                            date_update: json.data[i].date_update
                         },
-                        parent: json.data[i].GroupCode
+                        parent: json.data[i].group_code
                     });
                 }
             }
