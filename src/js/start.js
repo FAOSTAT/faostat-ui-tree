@@ -1,12 +1,11 @@
 /*global define*/
 define(['jquery',
         'loglevel',
-        'faostat_commons',
         'faostatapiclient',
         'q',
         'jstree',
         'amplify'
-], function ($, log, FAOSTATCommons, FAOSTATAPIClient) {
+], function ($, log, FAOSTATAPIClient) {
 
     'use strict';
 
@@ -77,7 +76,7 @@ define(['jquery',
         // add tree class
         this.tree.addClass('fs-tree');
 
-        this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
+        //this.CONFIG.lang_faostat = FAOSTATCommons.iso2faostat(this.CONFIG.lang);
 
         if (this.CONFIG.custom) {
             // create a custom tree
