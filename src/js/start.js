@@ -2,10 +2,9 @@
 define(['jquery',
         'loglevel',
         'faostatapiclient',
-        'q',
         'jstree',
         'amplify'
-], function ($, log, FAOSTATAPIClient) {
+], function ($, log, API) {
 
     'use strict';
 
@@ -53,9 +52,6 @@ define(['jquery',
 
         this.CONFIG.lang = this.CONFIG.lang !== null ? this.CONFIG.lang : 'en';
 
-        /* Initiate FAOSTAT API's client. */
-        this.CONFIG.api = new FAOSTATAPIClient();
-
         /* Render. */
         this.render();
 
@@ -84,9 +80,7 @@ define(['jquery',
         }
         else {
             /* Fetch FAOSTAT groups and domains. */
-            this.CONFIG.api.groupsanddomains({
-                lang: this.CONFIG.lang,
-                datasource: this.CONFIG.datasource,
+            API.groupsanddomains({
                 section: this.CONFIG.section
             }).then(function (json) {
                 self.createTree(self.prepareAPIData(json));
