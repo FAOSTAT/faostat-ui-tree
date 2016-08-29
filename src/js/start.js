@@ -8,13 +8,13 @@ define(['jquery',
 
     'use strict';
 
+    // TODO: refactor
     function TREE() {
 
         this.CONFIG = {
 
             w: null,
             code: null,
-            lang: 'en',
             group: null,
             domain: null,
 
@@ -44,13 +44,6 @@ define(['jquery',
 
         /* Extend default configuration. */
         this.CONFIG = $.extend(true, {}, this.CONFIG, config);
-
-        /* Fix the language, if needed. */
-        if (!this.CONFIG.lang) {
-            console.warn('Language for FAOSTAT-TREE is no set', this.CONFIG.lang);
-        }
-
-        this.CONFIG.lang = this.CONFIG.lang !== null ? this.CONFIG.lang : 'en';
 
         /* Render. */
         this.render();
@@ -217,8 +210,6 @@ define(['jquery',
         /* Implement node selection. */
         this.tree.on('activate_node.jstree', function (e, data) {
 
-            //log.info('activate_node.jstree')
-
             /* Fetch node. */
             var node = data.node;
 
@@ -249,10 +240,6 @@ define(['jquery',
         /* Show required domain. */
         this.tree.on('ready.jstree', function (data) {
 
-            //log.info('ready.jstree')
-
-            log.info(data);
-
             /* set and select default code. */
             self.selectDefaultCode();
 
@@ -270,7 +257,6 @@ define(['jquery',
                 // TODO: fix workaround for default code
                 var node = self.tree.jstree().get_selected(true);
 
-                log.info(node)
                 if (node !== undefined && node.length > 0) {
                     self.CONFIG.callback.onTreeRendered(self.getNodeAttributes(node[0]));
                 }
@@ -303,17 +289,13 @@ define(['jquery',
             // TODO: no default selection
         }
 
-
-        //log.info(this.CONFIG.code, this.CONFIG.default_code, this.tree.jstree())
-
         if (this.CONFIG.default_code) {
             if ( this.tree) {
-                //log.info(this.CONFIG.default_code)
                 try {
                     this.tree.jstree().select_node(this.CONFIG.default_code);
                     this.tree.jstree().open_node(this.CONFIG.default_code);
                 }catch(e) {
-                    log.error(e);
+                    log.error("TREE.selectDefaultCode;", e);
                 }
             }
         }
